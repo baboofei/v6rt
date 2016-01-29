@@ -89,3 +89,27 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// Set a process's start time deadline (stime)
+int
+sys_sline(void)
+{
+  int sline;
+
+  if(argint(0, &sline) < 0)
+    return -1;
+  proc->sline = sline;
+  return 0;
+}
+
+// Set a process's expected execution deadline (dtime)
+int
+sys_dline(void)
+{
+  int dline;
+
+  if(argint(0, &dline) < 0)
+    return -1;
+  proc->dline = dline; 
+  return 0;
+}

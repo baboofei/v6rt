@@ -66,6 +66,13 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  // Real-time components
+  uint itime;                  // Time (ticks) this process is initialized
+  uint stime;                  // Time (ticks) this process is started
+  uint sline;                  // Time interval (ticks) this process must be started (deadline)
+  uint dline;                  // Time interval (ticks) this process must be completed after started
+
 };
 
 // Process memory is laid out contiguously, low addresses first:

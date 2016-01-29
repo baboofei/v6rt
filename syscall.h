@@ -20,3 +20,9 @@
 #define SYS_link   19
 #define SYS_mkdir  20
 #define SYS_close  21
+
+
+// Real-time components
+
+#define SYS_RT_sline 22
+#define SYS_RT_dline 23

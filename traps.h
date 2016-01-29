@@ -36,3 +36,7 @@
 #define IRQ_ERROR       19
 #define IRQ_SPURIOUS    31
 
+// A simple solution
+// TODO: Actually solve the scheduler / timer problem by calibrating it
+#define SCHED_TICKS 100000
+

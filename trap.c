@@ -14,6 +14,8 @@ extern uint vectors[];  // in vectors.S: array of 256 entry pointers
 struct spinlock tickslock;
 uint ticks;
 
+uint yticks;
+
 void
 tvinit(void)
 {
@@ -24,6 +26,7 @@ tvinit(void)
   SETGATE(idt[T_SYSCALL], 1, SEG_KCODE<<3, vectors[T_SYSCALL], DPL_USER);
   
   initlock(&tickslock, "time");
+  yticks = 0;
 }
 
 void
@@ -103,7 +106,14 @@ trap(struct trapframe *tf)
   // Force process to give up CPU on clock tick.
   // If interrupts were on while locks held, would need to check nlock.
   if(proc && proc->state == RUNNING && tf->trapno == T_IRQ0+IRQ_TIMER)
-    yield();
+  {
+    // This interrupts way too often, when the RT scheduler is running thing is slow as ass
+    if(yticks >= SCHED_TICKS)
+    {
+      yticks = 0;
+      yield();
+    }    
+  }
 
   // Check if the process has been killed since we yielded
   if(proc && proc->killed && (tf->cs&3) == DPL_USER)

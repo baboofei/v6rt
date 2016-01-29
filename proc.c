@@ -70,6 +70,13 @@ found:
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
 
+  uint tt = ticks;
+
+  p->itime = tt;
+  p->stime = 0;
+  p->sline = 0;
+  p->dline = 0;
+
   return p;
 }
 
@@ -98,6 +105,10 @@ userinit(void)
 
   safestrcpy(p->name, "initcode", sizeof(p->name));
   p->cwd = namei("/");
+
+  uint tt = ticks;
+
+  p->stime = tt;
 
   p->state = RUNNABLE;
 }
@@ -266,6 +277,7 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct proc *op;
 
   for(;;){
     // Enable interrupts on this processor.
@@ -273,23 +285,141 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+
+    // Real-time scheduler
+    //
+    // Look for the processes closest to start deadline that has not started
+    // Start them
+    // Look for the processes closest to execution deadline
+    // Execute them
+    // Repeat
+    // ...
+    // If a process already exceeds sline then start it anyway (chances are it's still valuable)
+    // If a process already passes dline then screw it we are not executing some old crap
+
+    int minsline = -1;
+    int mindline = -1;
+    int slinefound = 0;
+    int dlinefound = 0;
+
+    int found = 0;
+
+    int t = ticks;
+
+    // Oh also, if a process's sline or dline is 0 then it's obviously not a real-time process
+    // processes are responsible for changing these values to its needs
+    // non-RT processes are left to be executed last
+
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
-        continue;
 
-      // Switch to chosen process.  It is the process's job
-      // to release ptable.lock and then reacquire it
-      // before jumping back to us.
-      proc = p;
-      switchuvm(p);
-      p->state = RUNNING;
-      swtch(&cpu->scheduler, proc->context);
-      switchkvm();
+      // Prioritize RT processes
+      if(p->sline != 0 || p->dline != 0)
+      {
+        // Look for processes closest to its dline
+        if(p->state == RUNNABLE && p->stime != 0)
+        {
+          // This process has already started
+          int dprox = (p->stime + p->dline) - t;
 
-      // Process is done running for now.
-      // It should have changed its p->state before coming back.
-      proc = 0;
+          // This process has is running and has not yet exceeded its deadline
+          if(dprox > 0)
+          {
+            found = 1;
+
+            // Compare and find the smallest remaining time
+            if(dlinefound == 0)
+            {
+              mindline = dprox;
+              op = p;
+              dlinefound = 1;
+            }
+            else if(dprox < mindline)
+            {
+              mindline = dprox;
+              op = p;
+            }
+
+            continue;
+          }
+        }
+
+        // Look for processes already exceeded its sline or closest to sline
+        if(p->state == EMBRYO && p->stime == 0 && dlinefound == 0)
+        {
+          // This process has not yet started
+          int sprox = (p->itime + p->sline) - t;  
+          found = 1;
+
+          // Compare and find the smallest exceeded time (i.e. largest absolute value)
+          if(slinefound == 0)
+          {
+            minsline = sprox;
+            op = p;
+            slinefound = 1;
+          }
+          else if(sprox < minsline)
+          {
+            minsline = sprox;
+            op = p;
+         }
+
+         continue;  
+        }
+
+        // Look for processes already exceeded its dline
+        if(p->state == RUNNABLE && p->stime != 0)
+        {
+          // This process has already started
+          int dprox = (p->stime + p->dline) - t;
+
+          // This process has is running and has not yet exceeded its deadline
+          if(dprox < 0)
+          {
+            found = 1;
+
+            // Compare and find the smallest remaining time
+            if(dlinefound == 0)
+            {
+              mindline = dprox;
+              op = p;
+              dlinefound = 1;
+            }
+            else if(dprox < mindline)
+            {
+              mindline = dprox;
+              op = p;
+            }
+
+            continue;
+          }
+        }
+      }
+      // Look for non-RT processes
+      if(p->state == RUNNABLE)
+      {
+        found = 1;
+        op = p;
+      }
     }
+
+    // No process to run, skip to next scheduling cycle
+    if(found == 0)
+    {
+      release(&ptable.lock);
+      continue;
+    }
+
+    // Switch to chosen process.  It is the process's job
+    // to release ptable.lock and then reacquire it
+    // before jumping back to us.
+    proc = op;
+    switchuvm(op);
+    op->state = RUNNING;
+    swtch(&cpu->scheduler, proc->context);
+    switchkvm();
+
+    proc = 0;
+
     release(&ptable.lock);
 
   }
