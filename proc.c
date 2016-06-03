@@ -6,11 +6,17 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "queue.h"
 
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
 } ptable;
+
+struct {
+  struct queue sline;
+  struct queue dline;
+} rtq;
 
 static struct proc *initproc;
 
@@ -23,7 +29,10 @@ static void wakeup1(void *chan);
 void
 pinit(void)
 {
+  cprintf("init process on cpu %d \n", cpu->id); 
   initlock(&ptable.lock, "ptable");
+  initqueue(&rtq.sline, "sline");
+  initqueue(&rtq.dline, "dline");
 }
 
 //PAGEBREAK: 32
@@ -69,6 +78,27 @@ found:
   p->context = (struct context*)sp;
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
+  
+  p->info.waittime = 0;
+  p->info.sleptime = 0;
+  p->info.susptime = 0;
+  p->info.waketime = 0;
+  p->info.deadtime = 0;
+  p->info.initlast = ticks;
+  p->info.sleplast = 0;
+  p->info.susplast = 0;
+  p->info.wakelast = 0;
+  p->info.killlast = 0;
+  p->info.sline = 0;
+  p->info.dline = 0;
+  p->info.started = 0;
+  
+  // Add process information to real-time queues
+  insert(&rtq.sline, addnode(&rtq.sline, p), 0);
+  insert(&rtq.dline, addnode(&rtq.dline, p), 0);
+  
+  qsize(&rtq.dline);
+  qsize(&rtq.sline);
 
   return p;
 }
@@ -144,6 +174,7 @@ fork(void)
   }
   np->sz = proc->sz;
   np->parent = proc;
+  np->info = proc->info;
   *np->tf = *proc->tf;
 
   // Clear %eax so that fork returns 0 in the child.
@@ -266,12 +297,21 @@ void
 scheduler(void)
 {
   struct proc *p;
+  int pid_last = 0;
+  int pid_this = 0;
 
   for(;;){
     // Enable interrupts on this processor.
     sti();
 
+	// Important segment:
+	//
+	// Kernel scheduler selects process to run here
+	//
     // Loop over process table looking for process to run.
+    long ti, te;
+    ti = ticks;
+
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
@@ -281,17 +321,33 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       proc = p;
+      pid_this = proc->pid;
+
       switchuvm(p);
+	  if(p->info.started == 0)
+	  {
+		  p->info.started = 1;
+		  p->info.waittime = ticks - p->info.initlast;
+	  }
       p->state = RUNNING;
+	  p->info.susptime += ticks - p->info.susplast;
+	  p->info.wakelast = ticks;
       swtch(&cpu->scheduler, proc->context);
       switchkvm();
+
+      te = ticks;
+      if(pid_last != pid_this)
+      {
+        cprintf("datapid %d exec %d ticks cpu %d at %d\n", p->pid, te - ti, cpu->id, ti);
+        pid_last = pid_this;
+      }
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       proc = 0;
+
     }
     release(&ptable.lock);
-
   }
 }
 
@@ -321,6 +377,8 @@ yield(void)
 {
   acquire(&ptable.lock);  //DOC: yieldlock
   proc->state = RUNNABLE;
+  proc->info.waketime += ticks - proc->info.wakelast;
+  proc->info.susplast = ticks;
   sched();
   release(&ptable.lock);
 }
@@ -370,11 +428,13 @@ sleep(void *chan, struct spinlock *lk)
 
   // Go to sleep.
   proc->chan = chan;
+  proc->info.sleplast = ticks;
   proc->state = SLEEPING;
   sched();
 
   // Tidy up.
   proc->chan = 0;
+  proc->info.sleptime = ticks - proc->info.sleplast;
 
   // Reacquire original lock.
   if(lk != &ptable.lock){  //DOC: sleeplock2
@@ -455,7 +515,12 @@ procdump(void)
       state = states[p->state];
     else
       state = "???";
-    cprintf("%d %s %s", p->pid, state, p->name);
+    cprintf("pid %d state %s name %s \n", p->pid, state, p->name);
+	cprintf("info \n");
+	cprintf("waittime %d \n", p->info.waittime);
+	cprintf("sleptime %d \n", p->info.sleptime);
+	cprintf("waketime %d \n", p->info.waketime);
+	cprintf("susptime %d \n", p->info.susptime);
     if(p->state == SLEEPING){
       getcallerpcs((uint*)p->context->ebp+2, pc);
       for(i=0; i<10 && pc[i] != 0; i++)

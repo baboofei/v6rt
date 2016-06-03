@@ -2,8 +2,10 @@ struct buf;
 struct context;
 struct file;
 struct inode;
+struct node;
 struct pipe;
 struct proc;
+struct queue;
 struct rtcdate;
 struct spinlock;
 struct stat;
@@ -118,6 +120,14 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+
+// queue.c
+void            initnode(struct node *);
+void            initqueue(struct queue *, char *);
+struct node *   addnode(struct queue *, void *);
+int             qsize(struct queue *);
+void            insert(struct queue *, struct node *, int);
+void *          delete(struct queue *, int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

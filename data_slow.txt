@@ -1,0 +1,443 @@
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o lapic.o lapic.c
+ld -m    elf_i386 -T kernel.ld -o kernel entry.o bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o queue.o spinlock.o string.o swtch.o syscall.o sysfile.o sysproc.o timer.o trapasm.o trap.o uart.o vectors.o vm.o  -b binary initcode entryother
+objdump -S kernel > kernel.asm
+objdump -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel.sym
+dd if=/dev/zero of=xv6.img count=10000
+dd if=bootblock of=xv6.img conv=notrunc
+dd if=kernel of=xv6.img seek=1 conv=notrunc
+qemu-system-i386 -nographic -serial mon:stdio -hdb fs.img xv6.img -smp 6 -m 512 
+xv6...
+init process on cpu 0 
+init queue sline 
+finished in 0 ticks
+init queue dline 
+finished in 0 ticks
+cpu1: starting
+cpu2: starting
+cpu3: starting
+cpu4: starting
+cpu5: starting
+inserting node to sline
+inserting node to dline
+queue dline has size 0
+queue sline has size 0
+cpu0: starting
+datapid 1 exec 2 ticks cpu 2 at 1
+datapid 1 exec 1 ticks cpu 0 at 8
+sb: size 1000 nblocks 941 ninodes 200 nlog 30 logstart 2 inodestart 32 bmap start 58
+datapid 1 exec 0 ticks cpu 5 at 20
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 1
+queue sline has size 1
+datapid 2 exec 0 ticks cpu 5 at 77
+datapid 2 exec 1 ticks cpu 0 at 117
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 2
+queue sline has size 2
+datapid 1 exec 2 ticks cpu 5 at 341
+datapid 1 exec 1 ticks cpu 0 at 344
+datapid 3 exec 0 ticks cpu 0 at 348
+datapid 3 exec 3 ticks cpu 5 at 355
+datapid 3 exec 2 ticks cpu 1 at 501
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 3
+queue sline has size 3
+datapid 1 exec 4 ticks cpu 5 at 557
+datapid 4 exec 0 ticks cpu 5 at 561
+datapid 4 exec 0 ticks cpu 0 at 596
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 4
+queue sline has size 4
+datapid 1 exec 2 ticks cpu 5 at 803
+datapid 5 exec 0 ticks cpu 5 at 821
+datapid 5 exec 1 ticks cpu 0 at 860
+usertests starting
+datapid 5 exec 0 ticks cpu 1 at 1072
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 5
+queue sline has size 5
+datapid 1 exec 4 ticks cpu 1 at 1072
+datapid 6 exec 0 ticks cpu 1 at 1086
+datapid 6 exec 1 ticks cpu 5 at 1087
+datapid 6 exec 1 ticks cpu 0 at 1088
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 6
+queue sline has size 6
+datapid 1 exec 2 ticks cpu 5 at 1369
+datapid 7 exec 0 ticks cpu 5 at 1371
+datapid 7 exec 1 ticks cpu 0 at 1382
+datapid 7 exec 1 ticks cpu 1 at 1402
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+datapid 1 exec 2 ticks cpu 5 at 1630
+inserting node to sline
+inserting node to dline
+queue dline has size 7
+queue sline has size 7
+datapid 8 exec 0 ticks cpu 5 at 1636
+datapid 8 exec 1 ticks cpu 0 at 1654
+datapid 8 exec 3 ticks cpu 1 at 1722
+datapid 8 exec 3 ticks cpu 2 at 1735
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+datapid 1 exec 1 ticks cpu 5 at 1892
+inserting node to dline
+queue dline has size 8
+queue sline has size 8
+datapid 9 exec 0 ticks cpu 5 at 1893
+datapid 9 exec 1 ticks cpu 0 at 1898
+datapid 9 exec 4 ticks cpu 1 at 1912
+datapid 9 exec 1 ticks cpu 2 at 1960
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 9
+queue sline has size 9
+datapid 1 exec 4 ticks cpu 5 at 2085
+datapid 10 exec 0 ticks cpu 5 at 2091
+datapid 10 exec 0 ticks cpu 0 at 2092
+datapid 10 exec 6 ticks cpu 1 at 2165
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 10
+datapid 1 exec 1 ticks cpu 0 at 2306
+queue sline has size 10
+datapid 1 exec 2 ticks cpu 1 at 2314
+datapid 11 exec 0 ticks cpu 1 at 2316
+datapid 11 exec 2 ticks cpu 5 at 2318
+datapid 11 exec 1 ticks cpu 0 at 2342
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 11
+queue sline has size 11
+datapid 1 exec 2 ticks cpu 5 at 2544
+datapid 12 exec 0 ticks cpu 5 at 2546
+datapid 12 exec 0 ticks cpu 0 at 2568
+datapid 12 exec 7 ticks cpu 1 at 2606
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 12
+queue sline has size 12
+datapid 1 exec 1 ticks cpu 5 at 2721
+datapid 13 exec 0 ticks cpu 5 at 2730
+datapid 13 exec 1 ticks cpu 0 at 2730
+datapid 13 exec 1 ticks cpu 1 at 2736
+datapid 13 exec 1 ticks cpu 2 at 2771
+datapid 13 exec 3 ticks cpu 3 at 2957
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 13
+queue sline has size 13
+datapid 1 exec 4 ticks cpu 5 at 2983
+datapid 14 exec 0 ticks cpu 5 at 2987
+datapid 14 exec 1 ticks cpu 0 at 2997
+datapid 14 exec 2 ticks cpu 1 at 3150
+usertests starting
+datapid 14 exec 5 ticks cpu 2 at 3196
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 14
+queue sline has size 14
+datapid 1 exec 3 ticks cpu 5 at 3204
+datapid 15 exec 0 ticks cpu 5 at 3207
+datapid 15 exec 1 ticks cpu 0 at 3209
+datapid 15 exec 2 ticks cpu 1 at 3266
+datapid 15 exec 1 ticks cpu 2 at 3303
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 15
+queue sline has size 15
+datapid 1 exec 2 ticks cpu 5 at 3424
+datapid 16 exec 0 ticks cpu 5 at 3426
+datapid 16 exec 1 ticks cpu 0 at 3433
+datapid 16 exec 0 ticks cpu 1 at 3610
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 16
+queue sline has size 16
+datapid 1 exec 1 ticks cpu 0 at 3666
+datapid 17 exec 0 ticks cpu 0 at 3670
+datapid 17 exec 0 ticks cpu 5 at 3671
+datapid 17 exec 5 ticks cpu 1 at 3680
+datapid 17 exec 2 ticks cpu 2 at 3849
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 17
+queue sline has size 17
+datapid 1 exec 12 ticks cpu 5 at 3893
+datapid 18 exec 0 ticks cpu 5 at 3905
+datapid 18 exec 1 ticks cpu 0 at 3910
+datapid 18 exec 4 ticks cpu 1 at 3931
+datapid 18 exec 2 ticks cpu 2 at 3961
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 18
+queue sline has size 18
+datapid 1 exec 2 ticks cpu 5 at 4189
+datapid 19 exec 0 ticks cpu 5 at 4198
+datapid 19 exec 1 ticks cpu 0 at 4212
+datapid 19 exec 5 ticks cpu 1 at 4262
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 19
+queue sline has size 19
+datapid 1 exec 2 ticks cpu 5 at 4405
+datapid 20 exec 0 ticks cpu 5 at 4409
+datapid 20 exec 1 ticks cpu 0 at 4439
+datapid 20 exec 0 ticks cpu 1 at 4474
+usertests starting
+datapid 20 exec 1 ticks cpu 2 at 4620
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 20
+queue sline has size 20
+datapid 1 exec 5 ticks cpu 2 at 4621
+datapid 1 exec 6 ticks cpu 3 at 4637
+datapid 21 exec 0 ticks cpu 3 at 4650
+datapid 21 exec 3 ticks cpu 5 at 4650
+datapid 21 exec 3 ticks cpu 0 at 4678
+datapid 21 exec 1 ticks cpu 1 at 4744
+datapid 21 exec 1 ticks cpu 2 at 4793
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 21
+queue sline has size 21
+datapid 1 exec 1 ticks cpu 5 at 4885
+datapid 22 exec 0 ticks cpu 5 at 4888
+datapid 22 exec 1 ticks cpu 0 at 4892
+datapid 22 exec 1 ticks cpu 1 at 4908
+usertests starting
+datapid 22 exec 5 ticks cpu 2 at 5149
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 22
+queue sline has size 22
+datapid 1 exec 1 ticks cpu 2 at 5154
+datapid 23 exec 0 ticks cpu 2 at 5155
+datapid 23 exec 0 ticks cpu 5 at 5156
+datapid 23 exec 1 ticks cpu 0 at 5165
+datapid 23 exec 4 ticks cpu 1 at 5252
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 23
+queue sline has size 23
+datapid 1 exec 1 ticks cpu 5 at 5426
+datapid 24 exec 0 ticks cpu 5 at 5432
+datapid 24 exec 3 ticks cpu 0 at 5435
+datapid 24 exec 1 ticks cpu 1 at 5443
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 24
+queue sline has size 24
+datapid 1 exec 2 ticks cpu 5 at 5623
+datapid 25 exec 0 ticks cpu 5 at 5630
+datapid 25 exec 1 ticks cpu 0 at 5630
+datapid 25 exec 1 ticks cpu 1 at 5680
+datapid 25 exec 9 ticks cpu 2 at 5843
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 25
+queue sline has size 25
+datapid 1 exec 2 ticks cpu 5 at 5868
+datapid 26 exec 0 ticks cpu 5 at 5871
+datapid 26 exec 1 ticks cpu 0 at 5875
+datapid 26 exec 1 ticks cpu 1 at 5932
+datapid 26 exec 3 ticks cpu 2 at 6045
+usertests starting
+already ran user tests -- rebuild fs.img
+datapid 1 exec 0 ticks cpu 5 at 6122
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 26
+queue sline has size 26
+datapid 27 exec 0 ticks cpu 5 at 6137
+datapid 27 exec 1 ticks cpu 0 at 6143
+datapid 27 exec 2 ticks cpu 1 at 6172
+datapid 27 exec 4 ticks cpu 2 at 6178
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 27
+queue sline has size 27
+datapid 1 exec 2 ticks cpu 5 at 6338
+datapid 28 exec 0 ticks cpu 5 at 6340
+datapid 28 exec 0 ticks cpu 0 at 6341
+datapid 28 exec 1 ticks cpu 1 at 6343
+datapid 28 exec 1 ticks cpu 2 at 6476
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 28
+queue sline has size 28
+datapid 1 exec 3 ticks cpu 1 at 6572
+datapid 29 exec 0 ticks cpu 1 at 6575
+datapid 29 exec 1 ticks cpu 0 at 6577
+datapid 29 exec 0 ticks cpu 5 at 6584
+datapid 29 exec 10 ticks cpu 2 at 6706
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 29
+queue sline has size 29
+datapid 1 exec 2 ticks cpu 5 at 6810
+datapid 1 exec 0 ticks cpu 0 at 6815
+datapid 30 exec 0 ticks cpu 0 at 6815
+datapid 30 exec 0 ticks cpu 5 at 6817
+datapid 30 exec 4 ticks cpu 1 at 6949
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 30
+queue sline has size 30
+datapid 1 exec 2 ticks cpu 5 at 7102
+datapid 31 exec 0 ticks cpu 5 at 7115
+datapid 31 exec 5 ticks cpu 0 at 7170
+datapid 31 exec 5 ticks cpu 1 at 7182
+datapid 31 exec 1 ticks cpu 2 at 7216
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 31
+queue sline has size 31
+datapid 1 exec 3 ticks cpu 5 at 7322
+datapid 32 exec 0 ticks cpu 5 at 7328
+datapid 32 exec 3 ticks cpu 0 at 7339
+datapid 32 exec 2 ticks cpu 1 at 7362
+datapid 32 exec 4 ticks cpu 2 at 7434
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 32
+queue sline has size 32
+datapid 1 exec 1 ticks cpu 0 at 7508
+datapid 33 exec 0 ticks cpu 0 at 7510
+datapid 33 exec 1 ticks cpu 5 at 7515
+datapid 33 exec 1 ticks cpu 1 at 7617
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 33
+queue sline has size 33
+datapid 1 exec 1 ticks cpu 5 at 7777
+datapid 34 exec 0 ticks cpu 5 at 7778
+datapid 34 exec 1 ticks cpu 0 at 7832
+datapid 34 exec 0 ticks cpu 1 at 7904
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+datapid 1 exec 1 ticks cpu 0 at 8061
+inserting node to sline
+inserting node to dline
+queue dline has size 34
+queue sline has size 34
+datapid 35 exec 0 ticks cpu 0 at 8069
+datapid 35 exec 2 ticks cpu 1 at 8084
+datapid 35 exec 1 ticks cpu 5 at 8088
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 35
+queue sline has size 35
+datapid 1 exec 2 ticks cpu 5 at 8266
+datapid 36 exec 0 ticks cpu 5 at 8268
+datapid 36 exec 1 ticks cpu 0 at 8274
+datapid 36 exec 4 ticks cpu 1 at 8283
+datapid 36 exec 8 ticks cpu 2 at 8374
+usertests starting
+already ran user tests -- rebuild fs.img
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 36
+queue sline has size 36
+datapid 1 exec 2 ticks cpu 5 at 8496
+datapid 37 exec 0 ticks cpu 5 at 8498
+datapid 37 exec 1 ticks cpu 0 at 8499

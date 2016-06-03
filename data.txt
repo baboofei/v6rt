@@ -1,0 +1,5269 @@
+gcc -Werror -Wall -o mkfs mkfs.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ulib.o ulib.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o usys.o usys.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o printf.o printf.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o umalloc.o umalloc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o cat.o cat.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _cat cat.o ulib.o usys.o printf.o umalloc.o
+objdump -S _cat > cat.asm
+objdump -t _cat | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > cat.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o echo.o echo.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _echo echo.o ulib.o usys.o printf.o umalloc.o
+objdump -S _echo > echo.asm
+objdump -t _echo | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > echo.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o forktest.o forktest.c
+# forktest has less library code linked in - needs to be small
+# in order to be able to max out the proc table.
+ld -m    elf_i386 -N -e main -Ttext 0 -o _forktest forktest.o ulib.o usys.o
+objdump -S _forktest > forktest.asm
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o grep.o grep.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _grep grep.o ulib.o usys.o printf.o umalloc.o
+objdump -S _grep > grep.asm
+objdump -t _grep | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > grep.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o init.o init.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _init init.o ulib.o usys.o printf.o umalloc.o
+objdump -S _init > init.asm
+objdump -t _init | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > init.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o kill.o kill.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _kill kill.o ulib.o usys.o printf.o umalloc.o
+objdump -S _kill > kill.asm
+objdump -t _kill | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kill.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ln.o ln.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _ln ln.o ulib.o usys.o printf.o umalloc.o
+objdump -S _ln > ln.asm
+objdump -t _ln | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ln.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ls.o ls.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _ls ls.o ulib.o usys.o printf.o umalloc.o
+objdump -S _ls > ls.asm
+objdump -t _ls | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ls.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o mkdir.o mkdir.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _mkdir mkdir.o ulib.o usys.o printf.o umalloc.o
+objdump -S _mkdir > mkdir.asm
+objdump -t _mkdir | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > mkdir.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o rm.o rm.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _rm rm.o ulib.o usys.o printf.o umalloc.o
+objdump -S _rm > rm.asm
+objdump -t _rm | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > rm.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o sh.o sh.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _sh sh.o ulib.o usys.o printf.o umalloc.o
+objdump -S _sh > sh.asm
+objdump -t _sh | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > sh.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o stressfs.o stressfs.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _stressfs stressfs.o ulib.o usys.o printf.o umalloc.o
+objdump -S _stressfs > stressfs.asm
+objdump -t _stressfs | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > stressfs.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o usertests.o usertests.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _usertests usertests.o ulib.o usys.o printf.o umalloc.o
+objdump -S _usertests > usertests.asm
+objdump -t _usertests | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > usertests.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o wc.o wc.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _wc wc.o ulib.o usys.o printf.o umalloc.o
+objdump -S _wc > wc.asm
+objdump -t _wc | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > wc.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o zombie.o zombie.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _zombie zombie.o ulib.o usys.o printf.o umalloc.o
+objdump -S _zombie > zombie.asm
+objdump -t _zombie | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > zombie.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o load.o load.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _load load.o ulib.o usys.o printf.o umalloc.o
+objdump -S _load > load.asm
+objdump -t _load | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > load.sym
+./mkfs fs.img README _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stressfs _usertests _wc _zombie _load 
+nmeta 59 (boot, super, log blocks 30 inode blocks 26, bitmap blocks 1) blocks 941 total 1000
+balloc: first 592 blocks have been allocated
+balloc: write bitmap block at sector 58
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -O -nostdinc -I. -c bootmain.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -nostdinc -I. -c bootasm.S
+ld -m    elf_i386 -N -e start -Ttext 0x7C00 -o bootblock.o bootasm.o bootmain.o
+objdump -S bootblock.o > bootblock.asm
+objcopy -S -O binary -j .text bootblock.o bootblock
+./sign.pl bootblock
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o bio.o bio.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o console.o console.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o exec.o exec.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o file.o file.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o fs.o fs.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ide.o ide.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ioapic.o ioapic.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o kalloc.o kalloc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o kbd.o kbd.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o lapic.o lapic.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o log.o log.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o main.o main.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o mp.o mp.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o picirq.o picirq.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o pipe.o pipe.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o proc.o proc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o queue.o queue.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o spinlock.o spinlock.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o string.o string.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o swtch.o swtch.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o syscall.o syscall.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o sysfile.o sysfile.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o sysproc.o sysproc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o timer.o timer.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o trapasm.o trapasm.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o trap.o trap.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o uart.o uart.c
+perl vectors.pl > vectors.S
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o vectors.o vectors.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o vm.o vm.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o entry.o entry.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -nostdinc -I. -c entryother.S
+ld -m    elf_i386 -N -e start -Ttext 0x7000 -o bootblockother.o entryother.o
+objcopy -S -O binary -j .text bootblockother.o entryother
+objdump -S bootblockother.o > entryother.asm
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -nostdinc -I. -c initcode.S
+ld -m    elf_i386 -N -e start -Ttext 0 -o initcode.out initcode.o
+objcopy -S -O binary initcode.out initcode
+objdump -S initcode.o > initcode.asm
+ld -m    elf_i386 -T kernel.ld -o kernel entry.o bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o queue.o spinlock.o string.o swtch.o syscall.o sysfile.o sysproc.o timer.o trapasm.o trap.o uart.o vectors.o vm.o  -b binary initcode entryother
+objdump -S kernel > kernel.asm
+objdump -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel.sym
+dd if=/dev/zero of=xv6.img count=10000
+dd if=bootblock of=xv6.img conv=notrunc
+dd if=kernel of=xv6.img seek=1 conv=notrunc
+qemu-system-i386 -nographic -serial mon:stdio -hdb fs.img xv6.img -smp 6 -m 512 
+xv6...
+init process on cpu 0 
+init queue sline 
+finished in 0 ticks
+init queue dline 
+finished in 0 ticks
+cpu1: starting
+cpu2: starting
+cpu3: starting
+cpu4: starting
+cpu5: starting
+inserting node to sline
+inserting node to dline
+queue dline has size 0
+queue sline has size 0
+cpu0: starting
+datapid 1 exec 3 ticks cpu 3
+sb: size 1000 nblocks 941 ninodes 200 nlog 30 logstart 2 inodestart 32 bmap start 58
+datapid 1 exec 0 ticks cpu 5
+datapid 1 exec 3 ticks cpu 0
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 1
+queue sline has size 1
+datapid 2 exec 0 ticks cpu 0
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 4 ticks cpu 1
+usertests starting
+createdelete test
+inserting node to sline
+inserting node to dline
+queue dline has size 2
+queue sline has size 2
+inserting node to sline
+inserting node to dline
+queue dline has size 3
+datapid 3 exec 1 ticks cpu 0
+queue sline has size 3
+datapid 3 exec 4 ticks cpu 5
+datapid 3 exec 2 ticks cpu 1
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 4
+queue sline has size 4
+datapid 4 exec 1 ticks cpu 1
+datapid 3 exec 0 ticks cpu 1
+datapid 4 exec 1 ticks cpu 1
+datapid 2 exec 3 ticks cpu 1
+datapid 3 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+datapid 5 exec 1 ticks cpu 2
+datapid 4 exec 2 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 0
+datapid 3 exec 0 ticks cpu 0
+datapid 5 exec 0 ticks cpu 0
+queue dline has size 5
+queue sline has size 5
+datapid 4 exec 6 ticks cpu 5
+datapid 5 exec 2 ticks cpu 1
+datapid 3 exec 3 ticks cpu 0
+datapid 4 exec 0 ticks cpu 0
+datapid 2 exec 8 ticks cpu 1
+datapid 6 exec 0 ticks cpu 1
+datapid 6 exec 0 ticks cpu 2
+datapid 4 exec 0 ticks cpu 2
+datapid 3 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 0
+datapid 6 exec 0 ticks cpu 0
+datapid 4 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 4 exec 2 ticks cpu 0
+datapid 5 exec 3 ticks cpu 0
+datapid 6 exec 3 ticks cpu 0
+datapid 5 exec 0 ticks cpu 0
+datapid 3 exec 4 ticks cpu 5
+datapid 4 exec 0 ticks cpu 0
+datapid 5 exec 1 ticks cpu 0
+datapid 6 exec 2 ticks cpu 0
+datapid 5 exec 0 ticks cpu 0
+datapid 6 exec 0 ticks cpu 0
+datapid 5 exec 0 ticks cpu 0
+datapid 6 exec 0 ticks cpu 0
+datapid 4 exec 5 ticks cpu 5
+datapid 3 exec 0 ticks cpu 5
+datapid 4 exec 0 ticks cpu 5
+datapid 4 exec 0 ticks cpu 0
+datapid 5 exec 1 ticks cpu 0
+datapid 6 exec 1 ticks cpu 0
+datapid 5 exec 0 ticks cpu 0
+datapid 3 exec 2 ticks cpu 5
+datapid 3 exec 1 ticks cpu 0
+datapid 4 exec 1 ticks cpu 0
+datapid 5 exec 1 ticks cpu 0
+datapid 6 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 0
+datapid 4 exec 0 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+datapid 5 exec 1 ticks cpu 0
+datapid 6 exec 3 ticks cpu 1
+datapid 2 exec 3 ticks cpu 2
+datapid 5 exec 1 ticks cpu 5
+datapid 5 exec 1 ticks cpu 1
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 4 ticks cpu 5
+datapid 6 exec 4 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 6 exec 2 ticks cpu 0
+datapid 6 exec 2 ticks cpu 1
+datapid 5 exec 1 ticks cpu 0
+datapid 5 exec 2 ticks cpu 5
+datapid 6 exec 3 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 4 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 5 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 6 exec 1 ticks cpu 0
+datapid 5 exec 5 ticks cpu 5
+datapid 6 exec 0 ticks cpu 5
+datapid 5 exec 0 ticks cpu 5
+datapid 2 exec 2 ticks cpu 0
+datapid 6 exec 8 ticks cpu 5
+datapid 6 exec 0 ticks cpu 0
+datapid 2 exec 4 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+createdelete ok
+linkunlink test
+inserting node to sline
+inserting node to dline
+queue dline has size 6
+queue sline has size 6
+datapid 7 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 7 exec 1 ticks cpu 0
+datapid 7 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 5
+datapid 7 exec 3 ticks cpu 5
+datapid 2 exec 3 ticks cpu 5
+datapid 7 exec 1 ticks cpu 1
+datapid 2 exec 3 ticks cpu 0
+datapid 7 exec 0 ticks cpu 0
+datapid 7 exec 2 ticks cpu 5
+linkunlink ok
+concreate datapid 2 exec 7 ticks cpu 5
+test
+inserting node to sline
+inserting node to dline
+queue dline has size 7
+queue sline has size 7
+datapid 8 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 8 exec 5 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 8 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 8 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 8 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 8 exec 0 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+datapid 8 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+datapid 2 exec 1 ticks cpu 0
+queue dline has size 8
+queue sline has size 8
+datapid 9 exec 1 ticks cpu 0
+datapid 9 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 0
+datapid 9 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 9
+queue sline has size 9
+datapid 2 exec 2 ticks cpu 5
+datapid 10 exec 2 ticks cpu 5
+datapid 10 exec 2 ticks cpu 0
+datapid 2 exec 3 ticks cpu 1
+datapid 2 exec 0 ticks cpu 0
+datapid 2 exec 8 ticks cpu 5
+datapid 10 exec 4 ticks cpu 5
+datapid 10 exec 3 ticks cpu 0
+inserting node to sline
+datapid 2 exec 1 ticks cpu 0
+inserting node to dline
+queue dline has size 10
+queue sline has size 10
+datapid 11 exec 5 ticks cpu 2
+datapid 2 exec 0 ticks cpu 5
+datapid 11 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 5
+queue dline has size 11
+queue sline has size 11
+datapid 12 exec 7 ticks cpu 1
+datapid 12 exec 7 ticks cpu 2
+datapid 12 exec 0 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 12
+queue sline has size 12
+datapid 13 exec 2 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+datapid 13 exec 1 ticks cpu 0
+datapid 13 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 13
+queue sline has size 13
+datapid 2 exec 2 ticks cpu 5
+datapid 14 exec 3 ticks cpu 5
+datapid 2 exec 2 ticks cpu 1
+datapid 14 exec 2 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+datapid 14 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 14
+queue sline has size 14
+datapid 15 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 15 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 15
+queue sline has size 15
+datapid 16 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 16 exec 0 ticks cpu 5
+datapid 16 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 16
+queue sline has size 16
+datapid 2 exec 2 ticks cpu 5
+datapid 17 exec 1 ticks cpu 0
+datapid 17 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+datapid 2 exec 2 ticks cpu 5
+queue dline has size 17
+queue sline has size 17
+datapid 18 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 18 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 18
+queue sline has size 18
+datapid 2 exec 4 ticks cpu 5
+datapid 19 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 19 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 19 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 19 exec 0 ticks cpu 5
+datapid 19 exec 1 ticks cpu 1
+datapid 2 exec 0 ticks cpu 0
+datapid 2 exec 2 ticks cpu 5
+datapid 19 exec 4 ticks cpu 5
+datapid 19 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 19
+queue sline has size 19
+datapid 2 exec 2 ticks cpu 5
+datapid 20 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 20 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 20
+queue sline has size 20
+datapid 2 exec 3 ticks cpu 5
+datapid 21 exec 1 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 21 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 21
+queue sline has size 21
+datapid 2 exec 3 ticks cpu 5
+datapid 22 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 22 exec 0 ticks cpu 5
+datapid 22 exec 0 ticks cpu 0
+inserting node to sline
+datapid 2 exec 5 ticks cpu 5
+inserting node to dline
+queue dline has size 22
+queue sline has size 22
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+datapid 23 exec 9 ticks cpu 2
+datapid 23 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 23
+queue sline has size 23
+datapid 24 exec 0 ticks cpu 0
+datapid 24 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 24 exec 0 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 0
+datapid 24 exec 5 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 24
+queue sline has size 24
+datapid 25 exec 2 ticks cpu 1
+datapid 25 exec 1 ticks cpu 2
+datapid 2 exec 2 ticks cpu 5
+datapid 25 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 25
+queue sline has size 25
+datapid 2 exec 1 ticks cpu 0
+datapid 26 exec 7 ticks cpu 1
+datapid 26 exec 1 ticks cpu 2
+datapid 2 exec 6 ticks cpu 1
+datapid 26 exec 0 ticks cpu 1
+datapid 26 exec 0 ticks cpu 5
+datapid 26 exec 3 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 26
+queue sline has size 26
+datapid 27 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 27 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 27
+queue sline has size 27
+datapid 2 exec 1 ticks cpu 0
+datapid 28 exec 1 ticks cpu 1
+datapid 28 exec 0 ticks cpu 0
+datapid 28 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 28
+queue sline has size 28
+datapid 2 exec 1 ticks cpu 5
+datapid 29 exec 3 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+datapid 29 exec 1 ticks cpu 0
+datapid 29 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 29 exec 0 ticks cpu 5
+datapid 29 exec 3 ticks cpu 1
+datapid 29 exec 3 ticks cpu 2
+datapid 29 exec 3 ticks cpu 3
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 5
+queue dline has size 29
+queue sline has size 29
+datapid 2 exec 1 ticks cpu 0
+datapid 30 exec 1 ticks cpu 0
+datapid 2 exec 1 ticks cpu 0
+datapid 30 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 30
+queue sline has size 30
+datapid 2 exec 3 ticks cpu 5
+datapid 31 exec 4 ticks cpu 5
+datapid 31 exec 1 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+datapid 31 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 31
+queue sline has size 31
+datapid 2 exec 5 ticks cpu 5
+datapid 32 exec 2 ticks cpu 0
+datapid 32 exec 0 ticks cpu 5
+datapid 32 exec 1 ticks cpu 1
+inserting node to sline
+inserting node to dline
+datapid 2 exec 4 ticks cpu 1
+queue dline has size 32
+queue sline has size 32
+datapid 33 exec 4 ticks cpu 2
+datapid 33 exec 0 ticks cpu 1
+datapid 33 exec 0 ticks cpu 5
+datapid 33 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+datapid 2 exec 1 ticks cpu 0
+queue dline has size 33
+queue sline has size 33
+datapid 2 exec 0 ticks cpu 1
+datapid 34 exec 1 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 34 exec 0 ticks cpu 1
+datapid 34 exec 0 ticks cpu 5
+datapid 34 exec 0 ticks cpu 0
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 5
+queue dline has size 34
+queue sline has size 34
+datapid 35 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 3 ticks cpu 1
+datapid 35 exec 2 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+datapid 35 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 35
+queue sline has size 35
+datapid 2 exec 9 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 36 exec 1 ticks cpu 0
+datapid 36 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 0
+datapid 36 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 36
+queue sline has size 36
+datapid 2 exec 4 ticks cpu 5
+datapid 37 exec 12 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 37 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 37
+queue sline has size 37
+datapid 2 exec 2 ticks cpu 5
+datapid 38 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 38 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 1
+datapid 38 exec 1 ticks cpu 1
+datapid 38 exec 1 ticks cpu 2
+datapid 2 exec 3 ticks cpu 1
+datapid 2 exec 8 ticks cpu 5
+datapid 38 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 38
+queue sline has size 38
+datapid 2 exec 9 ticks cpu 5
+datapid 39 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 39 exec 0 ticks cpu 5
+datapid 39 exec 1 ticks cpu 0
+datapid 39 exec 2 ticks cpu 1
+datapid 39 exec 6 ticks cpu 2
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 5
+queue dline has size 39
+queue sline has size 39
+datapid 40 exec 1 ticks cpu 0
+datapid 40 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 40
+queue sline has size 40
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 2 ticks cpu 0
+datapid 41 exec 3 ticks cpu 0
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 41
+queue sline has size 41
+datapid 2 exec 0 ticks cpu 1
+datapid 42 exec 3 ticks cpu 2
+datapid 42 exec 0 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 42
+queue sline has size 42
+datapid 43 exec 3 ticks cpu 1
+datapid 43 exec 2 ticks cpu 0
+datapid 43 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 43
+queue sline has size 43
+datapid 2 exec 4 ticks cpu 5
+datapid 44 exec 1 ticks cpu 0
+datapid 44 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+datapid 2 exec 2 ticks cpu 5
+queue dline has size 44
+queue sline has size 44
+datapid 2 exec 0 ticks cpu 0
+datapid 45 exec 1 ticks cpu 0
+datapid 2 exec 1 ticks cpu 0
+datapid 45 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 45
+queue sline has size 45
+datapid 46 exec 1 ticks cpu 1
+datapid 46 exec 0 ticks cpu 0
+datapid 46 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 46
+queue sline has size 46
+datapid 2 exec 4 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 47 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 0
+datapid 47 exec 1 ticks cpu 0
+datapid 47 exec 6 ticks cpu 5
+datapid 2 exec 3 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 47
+queue sline has size 47
+datapid 48 exec 8 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 48 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 48 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 48 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 48 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 48 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 48 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 48
+datapid 2 exec 2 ticks cpu 5
+queue sline has size 48
+datapid 2 exec 3 ticks cpu 0
+datapid 49 exec 0 ticks cpu 0
+datapid 49 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 49
+queue sline has size 49
+datapid 2 exec 3 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 1
+datapid 50 exec 1 ticks cpu 1
+datapid 50 exec 1 ticks cpu 0
+datapid 50 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 50
+queue sline has size 50
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 3 ticks cpu 0
+datapid 51 exec 1 ticks cpu 0
+datapid 2 exec 1 ticks cpu 1
+datapid 51 exec 2 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 51 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 51 exec 0 ticks cpu 1
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 51
+queue sline has size 51
+datapid 52 exec 0 ticks cpu 0
+datapid 52 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 52
+queue sline has size 52
+datapid 2 exec 1 ticks cpu 0
+datapid 53 exec 1 ticks cpu 0
+datapid 2 exec 9 ticks cpu 5
+datapid 53 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 53
+datapid 2 exec 2 ticks cpu 5
+queue sline has size 53
+datapid 2 exec 3 ticks cpu 0
+datapid 2 exec 1 ticks cpu 1
+datapid 54 exec 1 ticks cpu 1
+datapid 54 exec 1 ticks cpu 0
+datapid 54 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 5
+queue dline has size 54
+queue sline has size 54
+datapid 55 exec 0 ticks cpu 0
+datapid 55 exec 0 ticks cpu 5
+datapid 55 exec 1 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+inserting node to sline
+inserting node to dline
+queue dline has size 55
+queue sline has size 55
+datapid 2 exec 2 ticks cpu 5
+datapid 56 exec 2 ticks cpu 1
+datapid 56 exec 1 ticks cpu 0
+datapid 56 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 56
+queue sline has size 56
+datapid 2 exec 3 ticks cpu 5
+datapid 57 exec 1 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 57 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 57
+datapid 2 exec 2 ticks cpu 5
+queue sline has size 57
+datapid 58 exec 0 ticks cpu 5
+datapid 58 exec 0 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 58
+queue sline has size 58
+datapid 59 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 59 exec 2 ticks cpu 0
+datapid 2 exec 0 ticks cpu 0
+datapid 59 exec 1 ticks cpu 0
+datapid 2 exec 2 ticks cpu 5
+datapid 59 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 59
+queue sline has size 59
+datapid 2 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+datapid 60 exec 9 ticks cpu 1
+datapid 60 exec 1 ticks cpu 0
+datapid 2 exec 1 ticks cpu 1
+datapid 60 exec 3 ticks cpu 1
+inserting node to sline
+inserting node to dline
+queue dline has size 60
+queue sline has size 60
+datapid 2 exec 2 ticks cpu 1
+datapid 61 exec 2 ticks cpu 1
+datapid 61 exec 2 ticks cpu 2
+datapid 61 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 61
+queue sline has size 61
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 62 exec 1 ticks cpu 0
+datapid 62 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 62
+queue sline has size 62
+datapid 2 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 0
+datapid 63 exec 8 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 63 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 63 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 63 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 63 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 63 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 63
+datapid 2 exec 3 ticks cpu 5
+queue sline has size 63
+datapid 64 exec 2 ticks cpu 1
+datapid 64 exec 0 ticks cpu 5
+datapid 64 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 64
+queue sline has size 64
+datapid 65 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 65 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 65 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 65 exec 0 ticks cpu 5
+datapid 65 exec 1 ticks cpu 0
+datapid 65 exec 3 ticks cpu 1
+datapid 2 exec 4 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 65 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 65
+queue sline has size 65
+datapid 2 exec 1 ticks cpu 0
+datapid 66 exec 1 ticks cpu 0
+datapid 66 exec 4 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 66
+queue sline has size 66
+datapid 2 exec 2 ticks cpu 5
+datapid 67 exec 0 ticks cpu 0
+datapid 2 exec 1 ticks cpu 0
+datapid 67 exec 0 ticks cpu 0
+datapid 67 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 67
+datapid 2 exec 1 ticks cpu 0
+queue sline has size 67
+datapid 2 exec 1 ticks cpu 1
+datapid 2 exec 1 ticks cpu 2
+datapid 2 exec 5 ticks cpu 3
+datapid 68 exec 2 ticks cpu 3
+datapid 68 exec 8 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 68
+queue sline has size 68
+datapid 2 exec 4 ticks cpu 5
+datapid 69 exec 8 ticks cpu 1
+datapid 69 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 69
+queue sline has size 69
+datapid 70 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 70
+queue sline has size 70
+datapid 2 exec 1 ticks cpu 0
+datapid 71 exec 1 ticks cpu 0
+datapid 71 exec 2 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 71
+queue sline has size 71
+datapid 2 exec 2 ticks cpu 5
+datapid 72 exec 2 ticks cpu 5
+datapid 72 exec 1 ticks cpu 0
+datapid 2 exec 4 ticks cpu 5
+datapid 72 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 72
+queue sline has size 72
+datapid 2 exec 1 ticks cpu 1
+datapid 73 exec 2 ticks cpu 2
+datapid 73 exec 0 ticks cpu 1
+datapid 73 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 73
+queue sline has size 73
+datapid 74 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 74 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 74
+queue sline has size 74
+datapid 2 exec 4 ticks cpu 5
+datapid 75 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 75 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 75
+queue sline has size 75
+datapid 76 exec 0 ticks cpu 0
+datapid 76 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 76
+queue sline has size 76
+datapid 77 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 77 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 77
+queue sline has size 77
+datapid 78 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 78 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 78
+queue sline has size 78
+datapid 2 exec 6 ticks cpu 5
+datapid 79 exec 0 ticks cpu 0
+datapid 79 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 79
+datapid 2 exec 4 ticks cpu 1
+queue sline has size 79
+datapid 2 exec 6 ticks cpu 2
+datapid 80 exec 0 ticks cpu 2
+datapid 2 exec 2 ticks cpu 5
+datapid 80 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 80
+queue sline has size 80
+datapid 2 exec 9 ticks cpu 5
+datapid 81 exec 3 ticks cpu 5
+datapid 81 exec 1 ticks cpu 0
+datapid 2 exec 6 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 81 exec 1 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 81
+queue sline has size 81
+datapid 2 exec 5 ticks cpu 5
+datapid 82 exec 1 ticks cpu 1
+datapid 2 exec 1 ticks cpu 1
+datapid 82 exec 0 ticks cpu 1
+datapid 82 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 82
+queue sline has size 82
+datapid 83 exec 8 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 83 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 83 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 83 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 83 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 83 exec 6 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 83 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 83
+queue sline has size 83
+datapid 2 exec 3 ticks cpu 5
+datapid 84 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 84 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 84 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 84 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 84 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 84 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 84 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 84
+queue sline has size 84
+datapid 2 exec 5 ticks cpu 5
+datapid 85 exec 0 ticks cpu 0
+datapid 85 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 85
+queue sline has size 85
+datapid 2 exec 1 ticks cpu 0
+datapid 86 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+datapid 86 exec 1 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 86
+queue sline has size 86
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 87 exec 1 ticks cpu 0
+datapid 87 exec 0 ticks cpu 5
+concreate ok
+fourfiles test
+inserting node to sline
+inserting node to dline
+datapid 2 exec 7 ticks cpu 5
+queue dline has size 87
+queue sline has size 87
+inserting node to sline
+inserting node to dline
+datapid 88 exec 1 ticks cpu 1
+datapid 2 exec 1 ticks cpu 0
+queue dline has size 88
+queue sline has size 88
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 0
+datapid 89 exec 8 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 88 exec 2 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 89
+datapid 2 exec 1 ticks cpu 0
+queue sline has size 89
+datapid 89 exec 2 ticks cpu 1
+datapid 88 exec 2 ticks cpu 5
+datapid 89 exec 2 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 0
+datapid 89 exec 0 ticks cpu 0
+datapid 2 exec 3 ticks cpu 1
+datapid 88 exec 3 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 90 exec 1 ticks cpu 0
+datapid 90 exec 1 ticks cpu 1
+datapid 90 exec 2 ticks cpu 2
+datapid 90 exec 2 ticks cpu 3
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 0
+datapid 88 exec 0 ticks cpu 0
+datapid 90 exec 1 ticks cpu 0
+datapid 89 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+datapid 90 exec 3 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 88 exec 2 ticks cpu 0
+datapid 90 exec 2 ticks cpu 1
+datapid 2 exec 1 ticks cpu 1
+datapid 88 exec 2 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 88 exec 0 ticks cpu 1
+datapid 90 exec 5 ticks cpu 5
+datapid 89 exec 1 ticks cpu 0
+datapid 90 exec 0 ticks cpu 0
+datapid 89 exec 3 ticks cpu 5
+datapid 90 exec 3 ticks cpu 5
+datapid 89 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 88 exec 2 ticks cpu 0
+datapid 89 exec 3 ticks cpu 0
+inserting node to sline
+inserting node to dline
+datapid 89 exec 5 ticks cpu 1
+datapid 88 exec 0 ticks cpu 1
+datapid 89 exec 0 ticks cpu 1
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 88 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 1 ticks cpu 1
+datapid 2 exec 1 ticks cpu 2
+datapid 2 exec 1 ticks cpu 3
+queue dline has size 90
+queue sline has size 90
+datapid 89 exec 1 ticks cpu 5
+datapid 90 exec 2 ticks cpu 0
+datapid 90 exec 5 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 3
+datapid 89 exec 4 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 91 exec 1 ticks cpu 0
+datapid 90 exec 0 ticks cpu 0
+datapid 91 exec 1 ticks cpu 0
+datapid 89 exec 3 ticks cpu 5
+datapid 90 exec 3 ticks cpu 5
+datapid 89 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 10 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 4 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 0
+datapid 91 exec 1 ticks cpu 0
+datapid 90 exec 1 ticks cpu 5
+datapid 91 exec 2 ticks cpu 5
+datapid 90 exec 1 ticks cpu 0
+datapid 91 exec 2 ticks cpu 0
+datapid 90 exec 2 ticks cpu 1
+datapid 91 exec 3 ticks cpu 1
+datapid 90 exec 0 ticks cpu 1
+datapid 91 exec 0 ticks cpu 1
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 2 ticks cpu 5
+datapid 91 exec 2 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 90 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 91 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 1 ticks cpu 1
+fourfiles ok
+sharedfd test
+inserting node to sline
+inserting node to dline
+queue dline has size 91
+queue sline has size 91
+datapid 92 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 7 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 6 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 1 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 1 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 92 exec 1 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 2 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 5
+datapid 92 exec 1 ticks cpu 0
+datapid 2 exec 0 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+datapid 92 exec 6 ticks cpu 5
+datapid 92 exec 1 ticks cpu 0
+datapid 92 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 0
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 4 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 0
+datapid 2 exec 1 ticks cpu 0
+datapid 92 exec 8 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 0
+datapid 2 exec 2 ticks cpu 5
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 1
+datapid 92 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 92 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 2 exec 3 ticks cpu 0
+datapid 92 exec 8 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 3 ticks cpu 5
+datapid 92 exec 1 ticks cpu 0
+datapid 2 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 0
+datapid 92 exec 2 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 5 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+datapid 92 exec 0 ticks cpu 5
+datapid 92 exec 1 ticks cpu 0
+datapid 92 exec 4 ticks cpu 1
+datapid 92 exec 4 ticks cpu 2
+datapid 92 exec 2 ticks cpu 3
+datapid 2 exec 0 ticks cpu 5
+datapid 2 exec 1 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+sharedfd ok
+inserting node to sline
+inserting node to dline
+queue dline has size 92
+queue sline has size 92
+bigarg test
+datapid 93 exec 0 ticks cpu 0
+datapid 93 exec 0 ticks cpu 5
+bigarg test ok
+datapid 93 exec 2 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+bigwrite test
+datapid 2 exec 2 ticks cpu 0
+datapid 2 exec 2 ticks cpu 1
+datapid 2 exec 5 ticks cpu 2
+bigwrite ok
+inserting node to sline
+inserting node to dline
+queue dline has size 93
+queue sline has size 93
+bigarg test
+datapid 94 exec 0 ticks cpu 0
+datapid 94 exec 0 ticks cpu 5
+bigarg test ok
+datapid 94 exec 3 ticks cpu 1
+datapid 2 exec 0 ticks cpu 5
+bss test
+bss test ok
+sbrk test
+datapid 2 exec 3 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 94
+queue sline has size 94
+datapid 2 exec 3 ticks cpu 1
+datapid 2 exec 2 ticks cpu 3
+datapid 95 exec 11 ticks cpu 2
+datapid 2 exec 0 ticks cpu 2
+datapid 2 exec 2 ticks cpu 4
+inserting node to sline
+inserting node to dline
+queue dline has size 95
+queue sline has size 95
+pid 96 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x80000000--kill proc
+datapid 96 exec 8 ticks cpu 3
+datapid 2 exec 0 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 96
+queue sline has size 96
+pid 97 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x8000c350--kill proc
+datapid 97 exec 0 ticks cpu 3
+inserting node to sline
+datapid 2 exec 7 ticks cpu 3
+inserting node to dline
+queue dline has size 97
+queue sline has size 97
+pid 98 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x800186a0--kill proc
+datapid 98 exec 0 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 98
+datapid 2 exec 2 ticks cpu 3
+queue sline has size 98
+pid 99 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x800249f0--kill proc
+datapid 99 exec 0 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 99
+queue sline has size 99
+datapid 2 exec 3 ticks cpu 3
+pid 100 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x80030d40--kill proc
+datapid 100 exec 5 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 100
+queue sline has size 100
+pid 101 usertests: trap 14 err 5 on cpu 4 eip 0x3417 addr 0x8003d090--kill proc
+datapid 101 exec 0 ticks cpu 4
+inserting node to sline
+inserting node to dline
+queue dline has size 101
+queue sline has size 101
+datapid 2 exec 3 ticks cpu 4
+pid 102 usertests: trap 14 err 5 on cpu 4 eip 0x3417 addr 0x800493e0--kill proc
+datapid 102 exec 3 ticks cpu 4
+datapid 2 exec 0 ticks cpu 4
+inserting node to sline
+inserting node to dline
+queue dline has size 102
+queue sline has size 102
+pid 103 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x80055730--kill proc
+datapid 103 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 103
+queue sline has size 103
+datapid 2 exec 2 ticks cpu 5
+pid 104 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x80061a80--kill proc
+datapid 104 exec 3 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 104
+queue sline has size 104
+pid 105 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x8006ddd0--kill proc
+datapid 105 exec 0 ticks cpu 5
+inserting node to sline
+datapid 2 exec 5 ticks cpu 5
+inserting node to dline
+queue dline has size 105
+queue sline has size 105
+datapid 106 exec 2 ticks cpu 5
+pid 106 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x8007a120--kill proc
+inserting node to sline
+inserting node to dline
+queue dline has size 106
+queue sline has size 106
+datapid 2 exec 2 ticks cpu 5
+pid 107 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x80086470--kill proc
+datapid 107 exec 0 ticks cpu 5
+inserting node to sline
+datapid 2 exec 3 ticks cpu 5
+inserting node to dline
+queue dline has size 107
+queue sline has size 107
+pid 108 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x800927c0--kill proc
+datapid 108 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 108
+queue sline has size 108
+datapid 2 exec 5 ticks cpu 5
+pid 109 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x8009eb10--kill proc
+datapid 109 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 109
+queue sline has size 109
+datapid 2 exec 2 ticks cpu 2
+pid 110 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x800aae60--kill proc
+datapid 110 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 110
+queue sline has size 110
+datapid 2 exec 2 ticks cpu 2
+datapid 2 exec 4 ticks cpu 3
+datapid 111 exec 8 ticks cpu 2
+pid 111 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x800b71b0--kill proc
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 2
+queue dline has size 111
+queue sline has size 111
+pid 112 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x800c3500--kill proc
+datapid 112 exec 0 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 112
+datapid 2 exec 1 ticks cpu 3
+queue sline has size 112
+pid 113 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x800cf850--kill proc
+datapid 113 exec 0 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 113
+datapid 2 exec 5 ticks cpu 3
+queue sline has size 113
+pid 114 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x800dbba0--kill proc
+datapid 114 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 114
+queue sline has size 114
+datapid 2 exec 2 ticks cpu 5
+pid 115 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x800e7ef0--kill proc
+datapid 115 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 115
+queue sline has size 115
+pid 116 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x800f4240--kill proc
+datapid 116 exec 0 ticks cpu 5
+datapid 2 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 116
+queue sline has size 116
+pid 117 usertests: trap 14 err 5 on cpu 0 eip 0x3417 addr 0x80100590--kill proc
+datapid 117 exec 0 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 117
+queue sline has size 117
+datapid 2 exec 1 ticks cpu 0
+pid 118 usertests: trap 14 err 5 on cpu 1 eip 0x3417 addr 0x8010c8e0--kill proc
+datapid 118 exec 0 ticks cpu 1
+inserting node to sline
+inserting node to dline
+queue dline has size 118
+queue sline has size 118
+datapid 2 exec 14 ticks cpu 1
+pid 119 usertests: trap 14 err 5 on cpu 1 eip 0x3417 addr 0x80118c30--kill proc
+datapid 119 exec 0 ticks cpu 1
+inserting node to sline
+inserting node to dline
+queue dline has size 119
+queue sline has size 119
+datapid 2 exec 4 ticks cpu 1
+pid 120 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x80124f80--kill proc
+datapid 120 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 120
+queue sline has size 120
+datapid 2 exec 5 ticks cpu 2
+pid 121 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x801312d0--kill proc
+datapid 121 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 121
+queue sline has size 121
+datapid 2 exec 3 ticks cpu 2
+pid 122 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x8013d620--kill proc
+datapid 122 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 122
+queue sline has size 122
+datapid 2 exec 5 ticks cpu 2
+pid 123 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x80149970--kill proc
+datapid 123 exec 0 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 123
+queue sline has size 123
+datapid 2 exec 3 ticks cpu 3
+pid 124 usertests: trap 14 err 5 on cpu 4 eip 0x3417 addr 0x80155cc0--kill proc
+datapid 124 exec 0 ticks cpu 4
+inserting node to sline
+datapid 2 exec 3 ticks cpu 4
+inserting node to dline
+queue dline has size 124
+queue sline has size 124
+pid 125 usertests: trap 14 err 5 on cpu 4 eip 0x3417 addr 0x80162010--kill proc
+datapid 125 exec 0 ticks cpu 4
+inserting node to sline
+inserting node to dline
+queue dline has size 125
+queue sline has size 125
+datapid 2 exec 2 ticks cpu 4
+pid 126 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x8016e360--kill proc
+datapid 126 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 126
+queue sline has size 126
+datapid 2 exec 4 ticks cpu 5
+pid 127 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x8017a6b0--kill proc
+datapid 127 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 127
+queue sline has size 127
+datapid 2 exec 4 ticks cpu 2
+pid 128 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x80186a00--kill proc
+datapid 128 exec 2 ticks cpu 2
+inserting node to sline
+datapid 2 exec 4 ticks cpu 2
+inserting node to dline
+queue dline has size 128
+queue sline has size 128
+pid 129 usertests: trap 14 err 5 on cpu 3 eip 0x3417 addr 0x80192d50--kill proc
+datapid 129 exec 3 ticks cpu 3
+inserting node to sline
+inserting node to dline
+queue dline has size 129
+queue sline has size 129
+datapid 2 exec 3 ticks cpu 3
+pid 130 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x8019f0a0--kill proc
+datapid 130 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 130
+datapid 2 exec 2 ticks cpu 5
+queue sline has size 130
+pid 131 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x801ab3f0--kill proc
+datapid 131 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 131
+queue sline has size 131
+datapid 2 exec 3 ticks cpu 5
+pid 132 usertests: trap 14 err 5 on cpu 5 eip 0x3417 addr 0x801b7740--kill proc
+datapid 132 exec 0 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 132
+queue sline has size 132
+datapid 2 exec 4 ticks cpu 5
+pid 133 usertests: trap 14 err 5 on cpu 0 eip 0x3417 addr 0x801c3a90--kill proc
+datapid 133 exec 0 ticks cpu 0
+datapid 2 exec 1 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 133
+queue sline has size 133
+pid 134 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x801cfde0--kill proc
+datapid 134 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 134
+queue sline has size 134
+datapid 2 exec 3 ticks cpu 2
+pid 135 usertests: trap 14 err 5 on cpu 2 eip 0x3417 addr 0x801dc130--kill proc
+datapid 135 exec 0 ticks cpu 2
+inserting node to sline
+inserting node to dline
+queue dline has size 135
+queue sline has size 135
+datapid 2 exec 2 ticks cpu 2
+datapid 136 exec 4 ticks cpu 3
+datapid 136 exec 2 ticks cpu 4
+datapid 136 exec 2 ticks cpu 5
+datapid 136 exec 1 ticks cpu 0
+datapid 136 exec 1 ticks cpu 1
+datapid 136 exec 4 ticks cpu 2
+datapid 2 exec 3 ticks cpu 5
+inserting node to sline
+inserting node to dline
+queue dline has size 136
+queue sline has size 136
+datapid 137 exec 3 ticks cpu 5
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 137 exec 4 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 5 ticks cpu 2
+datapid 136 exec 3 ticks cpu 1
+datapid 137 exec 4 ticks cpu 3
+datapid 137 exec 9 ticks cpu 4
+inserting node to sline
+inserting node to dline
+queue dline has size 137
+queue sline has size 137
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 2 exec 3 ticks cpu 4
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 137 exec 1 ticks cpu 1
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 2 ticks cpu 4
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 4 ticks cpu 1
+datapid 137 exec 4 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 137 exec 0 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 136 exec 3 ticks cpu 1
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 137 exec 4 ticks cpu 1
+datapid 136 exec 1 ticks cpu 1
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 5
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 137 exec 5 ticks cpu 1
+datapid 136 exec 6 ticks cpu 2
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 6 ticks cpu 1
+datapid 137 exec 6 ticks cpu 1
+datapid 137 exec 6 ticks cpu 2
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 5 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+allocuvm out of memory
+datapid 137 exec 0 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 3 ticks cpu 1
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 1 ticks cpu 2
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 1
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 1
+datapid 137 exec 2 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 137 exec 2 ticks cpu 1
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+inserting node to sline
+inserting node to dline
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 2 exec 6 ticks cpu 2
+queue dline has size 138
+queue sline has size 138
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 4 ticks cpu 1
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 137 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 137 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 4 ticks cpu 0
+datapid 138 exec 5 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 2 exec 3 ticks cpu 3
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 7 ticks cpu 3
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 4 ticks cpu 4
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 7 ticks cpu 5
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 136 exec 2 ticks cpu 1
+datapid 136 exec 2 ticks cpu 2
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 1
+datapid 138 exec 1 ticks cpu 2
+datapid 138 exec 1 ticks cpu 3
+datapid 137 exec 2 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 4 ticks cpu 1
+datapid 136 exec 3 ticks cpu 2
+datapid 137 exec 5 ticks cpu 1
+datapid 138 exec 4 ticks cpu 2
+datapid 136 exec 5 ticks cpu 3
+datapid 139 exec 1 ticks cpu 0
+datapid 137 exec 0 ticks cpu 2
+datapid 139 exec 0 ticks cpu 2
+datapid 139 exec 1 ticks cpu 3
+datapid 138 exec 3 ticks cpu 1
+datapid 137 exec 2 ticks cpu 2
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 136 exec 4 ticks cpu 1
+datapid 136 exec 4 ticks cpu 2
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 6 ticks cpu 1
+datapid 137 exec 1 ticks cpu 2
+datapid 136 exec 1 ticks cpu 1
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 138 exec 6 ticks cpu 1
+datapid 138 exec 6 ticks cpu 2
+datapid 137 exec 1 ticks cpu 0
+datapid 137 exec 0 ticks cpu 2
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 3 ticks cpu 1
+datapid 137 exec 4 ticks cpu 1
+datapid 136 exec 1 ticks cpu 1
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 2
+datapid 136 exec 0 ticks cpu 3
+datapid 137 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 2
+allocuvm out of memory
+datapid 137 exec 1 ticks cpu 2
+datapid 136 exec 0 ticks cpu 0
+datapid 138 exec 2 ticks cpu 1
+datapid 136 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 137 exec 3 ticks cpu 1
+datapid 139 exec 2 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 1
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 137 exec 4 ticks cpu 1
+datapid 139 exec 3 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 1
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 139
+queue sline has size 139
+datapid 137 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 2 exec 1 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 2 ticks cpu 2
+datapid 2 exec 1 ticks cpu 0
+datapid 137 exec 3 ticks cpu 1
+datapid 139 exec 3 ticks cpu 1
+datapid 139 exec 0 ticks cpu 3
+datapid 138 exec 2 ticks cpu 0
+datapid 2 exec 1 ticks cpu 1
+datapid 136 exec 1 ticks cpu 1
+datapid 137 exec 1 ticks cpu 2
+datapid 136 exec 1 ticks cpu 3
+datapid 137 exec 1 ticks cpu 3
+datapid 137 exec 1 ticks cpu 4
+datapid 2 exec 2 ticks cpu 2
+datapid 139 exec 0 ticks cpu 0
+datapid 138 exec 4 ticks cpu 1
+datapid 136 exec 2 ticks cpu 3
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 1
+datapid 138 exec 1 ticks cpu 1
+datapid 139 exec 1 ticks cpu 1
+datapid 137 exec 0 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 2 exec 15 ticks cpu 3
+datapid 140 exec 16 ticks cpu 4
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 139 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 2
+datapid 138 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 1
+datapid 137 exec 0 ticks cpu 1
+datapid 136 exec 0 ticks cpu 2
+datapid 137 exec 0 ticks cpu 2
+datapid 138 exec 2 ticks cpu 1
+datapid 139 exec 3 ticks cpu 1
+datapid 139 exec 2 ticks cpu 2
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 0 ticks cpu 1
+datapid 140 exec 1 ticks cpu 5
+datapid 136 exec 1 ticks cpu 1
+datapid 137 exec 1 ticks cpu 1
+datapid 139 exec 1 ticks cpu 1
+datapid 137 exec 0 ticks cpu 1
+datapid 138 exec 2 ticks cpu 0
+datapid 140 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 5 ticks cpu 1
+datapid 137 exec 5 ticks cpu 1
+datapid 136 exec 5 ticks cpu 2
+datapid 137 exec 5 ticks cpu 2
+datapid 137 exec 5 ticks cpu 3
+datapid 138 exec 5 ticks cpu 1
+datapid 139 exec 5 ticks cpu 1
+datapid 136 exec 0 ticks cpu 2
+datapid 140 exec 3 ticks cpu 0
+datapid 140 exec 0 ticks cpu 1
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 139 exec 0 ticks cpu 1
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 4 ticks cpu 0
+datapid 138 exec 5 ticks cpu 0
+datapid 139 exec 5 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 8 ticks cpu 1
+allocuvm out of memory
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 139 exec 2 ticks cpu 2
+datapid 140 exec 2 ticks cpu 2
+datapid 140 exec 2 ticks cpu 3
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 1
+datapid 139 exec 0 ticks cpu 2
+datapid 136 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 137 exec 1 ticks cpu 3
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 4 ticks cpu 0
+datapid 139 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 4 ticks cpu 0
+datapid 139 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 137 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 137 exec 0 ticks cpu 1
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 138 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 137 exec 0 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 6 ticks cpu 1
+datapid 137 exec 7 ticks cpu 1
+datapid 138 exec 7 ticks cpu 1
+datapid 136 exec 7 ticks cpu 2
+datapid 137 exec 7 ticks cpu 2
+datapid 136 exec 7 ticks cpu 3
+datapid 137 exec 7 ticks cpu 3
+datapid 139 exec 8 ticks cpu 1
+datapid 138 exec 8 ticks cpu 2
+datapid 136 exec 1 ticks cpu 3
+datapid 137 exec 1 ticks cpu 4
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 4 ticks cpu 0
+datapid 138 exec 4 ticks cpu 0
+datapid 139 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 4 ticks cpu 0
+datapid 138 exec 5 ticks cpu 0
+datapid 136 exec 5 ticks cpu 1
+datapid 137 exec 5 ticks cpu 1
+datapid 138 exec 5 ticks cpu 1
+datapid 137 exec 5 ticks cpu 3
+datapid 139 exec 6 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 7 ticks cpu 1
+datapid 136 exec 8 ticks cpu 2
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 1
+datapid 138 exec 1 ticks cpu 1
+datapid 139 exec 1 ticks cpu 1
+datapid 139 exec 3 ticks cpu 3
+datapid 137 exec 4 ticks cpu 0
+datapid 140 exec 1 ticks cpu 1
+datapid 138 exec 3 ticks cpu 2
+datapid 140 exec 3 ticks cpu 2
+datapid 140 exec 0 ticks cpu 3
+datapid 140 exec 1 ticks cpu 4
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 1
+datapid 137 exec 2 ticks cpu 2
+datapid 138 exec 1 ticks cpu 3
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 3 ticks cpu 0
+datapid 137 exec 4 ticks cpu 0
+datapid 138 exec 4 ticks cpu 0
+datapid 139 exec 4 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 3 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 137 exec 19 ticks cpu 1
+datapid 138 exec 19 ticks cpu 1
+datapid 139 exec 19 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+inserting node to sline
+inserting node to dline
+queue dline has size 140
+queue sline has size 140
+datapid 137 exec 1 ticks cpu 1
+datapid 138 exec 1 ticks cpu 1
+datapid 139 exec 1 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 2 exec 1 ticks cpu 0
+datapid 136 exec 2 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 2 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 141 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 1
+datapid 138 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 141 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 2
+datapid 138 exec 0 ticks cpu 2
+datapid 139 exec 0 ticks cpu 2
+datapid 141 exec 0 ticks cpu 2
+datapid 138 exec 0 ticks cpu 4
+datapid 138 exec 0 ticks cpu 5
+datapid 138 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 137 exec 2 ticks cpu 1
+datapid 136 exec 2 ticks cpu 2
+datapid 139 exec 2 ticks cpu 3
+datapid 141 exec 2 ticks cpu 4
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 140 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 140 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 138 exec 3 ticks cpu 1
+datapid 139 exec 3 ticks cpu 1
+datapid 140 exec 3 ticks cpu 1
+datapid 140 exec 2 ticks cpu 3
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 0 ticks cpu 1
+datapid 139 exec 2 ticks cpu 2
+datapid 139 exec 1 ticks cpu 3
+datapid 138 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 2 ticks cpu 1
+datapid 137 exec 2 ticks cpu 2
+datapid 136 exec 1 ticks cpu 0
+datapid 137 exec 2 ticks cpu 0
+datapid 138 exec 3 ticks cpu 0
+datapid 139 exec 3 ticks cpu 0
+datapid 140 exec 3 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 140 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 138 exec 3 ticks cpu 1
+datapid 139 exec 3 ticks cpu 1
+datapid 140 exec 3 ticks cpu 1
+datapid 136 exec 0 ticks cpu 1
+datapid 138 exec 0 ticks cpu 1
+datapid 139 exec 0 ticks cpu 1
+datapid 140 exec 0 ticks cpu 1
+datapid 141 exec 5 ticks cpu 5
+datapid 137 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 0
+datapid 139 exec 2 ticks cpu 0
+datapid 140 exec 2 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 0
+datapid 138 exec 1 ticks cpu 0
+datapid 139 exec 1 ticks cpu 0
+datapid 140 exec 1 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 136 exec 0 ticks cpu 0
+datapid 137 exec 0 ticks cpu 0
+datapid 138 exec 0 ticks cpu 0
+datapid 139 exec 0 ticks cpu 0
+datapid 140 exec 0 ticks cpu 0
+datapid 137 exec 1 ticks cpu 1
+datapid 139 exec 2 ticks cpu 2
+datapid 140 exec 2 ticks cpu 2
+datapid 140 exec 2 ticks cpu 3
+datapid 140 exec 2 ticks cpu 4
+datapid 136 exec 1 ticks cpu 0
+datapid 138 exec 2 ticks cpu 1
+datapid 137 exec 0 ticks cpu 2
+datapid 138 exec 0 ticks cpu 2
+datapid 139 exec 0 ticks cpu 3
+datapid 136 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 1
+datapid 139 exec 2 ticks cpu 2
+datapid 137 exec 1 ticks cpu 0

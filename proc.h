@@ -51,6 +51,23 @@ struct context {
 
 enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+// Per-process information
+struct pinfo {
+	int waittime;   // The amount of time this process spent waiting to be started (first scheduling round)
+	int sleptime;   // The amount of time this process spent sleeping voluntarily
+	int susptime;   // The amount of time this process spent waiting for other processes
+	int waketime;   // The amount of time this process spent working
+	int deadtime;
+	int initlast;
+	int sleplast;
+	int susplast;
+	int wakelast;
+	int killlast;
+	int dline;
+	int sline;
+	int started;
+};
+
 // Per-process state
 struct proc {
   uint sz;                     // Size of process memory (bytes)
@@ -66,6 +83,7 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  struct pinfo info;           // Time information
 };
 
 // Process memory is laid out contiguously, low addresses first:

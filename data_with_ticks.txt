@@ -1,0 +1,1414 @@
+gcc -Werror -Wall -o mkfs mkfs.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ulib.o ulib.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o usys.o usys.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o printf.o printf.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o umalloc.o umalloc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o cat.o cat.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _cat cat.o ulib.o usys.o printf.o umalloc.o
+objdump -S _cat > cat.asm
+objdump -t _cat | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > cat.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o echo.o echo.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _echo echo.o ulib.o usys.o printf.o umalloc.o
+objdump -S _echo > echo.asm
+objdump -t _echo | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > echo.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o forktest.o forktest.c
+# forktest has less library code linked in - needs to be small
+# in order to be able to max out the proc table.
+ld -m    elf_i386 -N -e main -Ttext 0 -o _forktest forktest.o ulib.o usys.o
+objdump -S _forktest > forktest.asm
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o grep.o grep.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _grep grep.o ulib.o usys.o printf.o umalloc.o
+objdump -S _grep > grep.asm
+objdump -t _grep | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > grep.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o init.o init.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _init init.o ulib.o usys.o printf.o umalloc.o
+objdump -S _init > init.asm
+objdump -t _init | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > init.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o kill.o kill.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _kill kill.o ulib.o usys.o printf.o umalloc.o
+objdump -S _kill > kill.asm
+objdump -t _kill | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kill.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ln.o ln.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _ln ln.o ulib.o usys.o printf.o umalloc.o
+objdump -S _ln > ln.asm
+objdump -t _ln | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ln.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ls.o ls.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _ls ls.o ulib.o usys.o printf.o umalloc.o
+objdump -S _ls > ls.asm
+objdump -t _ls | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > ls.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o mkdir.o mkdir.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _mkdir mkdir.o ulib.o usys.o printf.o umalloc.o
+objdump -S _mkdir > mkdir.asm
+objdump -t _mkdir | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > mkdir.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o rm.o rm.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _rm rm.o ulib.o usys.o printf.o umalloc.o
+objdump -S _rm > rm.asm
+objdump -t _rm | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > rm.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o sh.o sh.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _sh sh.o ulib.o usys.o printf.o umalloc.o
+objdump -S _sh > sh.asm
+objdump -t _sh | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > sh.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o stressfs.o stressfs.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _stressfs stressfs.o ulib.o usys.o printf.o umalloc.o
+objdump -S _stressfs > stressfs.asm
+objdump -t _stressfs | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > stressfs.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o usertests.o usertests.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _usertests usertests.o ulib.o usys.o printf.o umalloc.o
+objdump -S _usertests > usertests.asm
+objdump -t _usertests | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > usertests.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o wc.o wc.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _wc wc.o ulib.o usys.o printf.o umalloc.o
+objdump -S _wc > wc.asm
+objdump -t _wc | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > wc.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o zombie.o zombie.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _zombie zombie.o ulib.o usys.o printf.o umalloc.o
+objdump -S _zombie > zombie.asm
+objdump -t _zombie | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > zombie.sym
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o load.o load.c
+ld -m    elf_i386 -N -e main -Ttext 0 -o _load load.o ulib.o usys.o printf.o umalloc.o
+objdump -S _load > load.asm
+objdump -t _load | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > load.sym
+./mkfs fs.img README _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stressfs _usertests _wc _zombie _load 
+nmeta 59 (boot, super, log blocks 30 inode blocks 26, bitmap blocks 1) blocks 941 total 1000
+balloc: first 592 blocks have been allocated
+balloc: write bitmap block at sector 58
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -O -nostdinc -I. -c bootmain.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -nostdinc -I. -c bootasm.S
+ld -m    elf_i386 -N -e start -Ttext 0x7C00 -o bootblock.o bootasm.o bootmain.o
+objdump -S bootblock.o > bootblock.asm
+objcopy -S -O binary -j .text bootblock.o bootblock
+./sign.pl bootblock
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o bio.o bio.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o console.o console.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o exec.o exec.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o file.o file.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o fs.o fs.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ide.o ide.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o ioapic.o ioapic.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o kalloc.o kalloc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o kbd.o kbd.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o lapic.o lapic.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o log.o log.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o main.o main.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o mp.o mp.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o picirq.o picirq.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o pipe.o pipe.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o proc.o proc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o queue.o queue.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o spinlock.o spinlock.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o string.o string.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o swtch.o swtch.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o syscall.o syscall.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o sysfile.o sysfile.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o sysproc.o sysproc.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o timer.o timer.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o trapasm.o trapasm.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o trap.o trap.c
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o uart.o uart.c
+perl vectors.pl > vectors.S
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o vectors.o vectors.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector   -c -o vm.o vm.c
+gcc -m32 -gdwarf-2 -Wa,-divide   -c -o entry.o entry.S
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -nostdinc -I. -c entryother.S
+ld -m    elf_i386 -N -e start -Ttext 0x7000 -o bootblockother.o entryother.o
+objcopy -S -O binary -j .text bootblockother.o entryother
+objdump -S bootblockother.o > entryother.asm
+gcc -fno-pic -static -fno-builtin -fno-strict-aliasing -fvar-tracking -fvar-tracking-assignments -O0 -g -Wall -MD -gdwarf-2 -m32 -Werror -fno-omit-frame-pointer -fno-stack-protector -nostdinc -I. -c initcode.S
+ld -m    elf_i386 -N -e start -Ttext 0 -o initcode.out initcode.o
+objcopy -S -O binary initcode.out initcode
+objdump -S initcode.o > initcode.asm
+ld -m    elf_i386 -T kernel.ld -o kernel entry.o bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o queue.o spinlock.o string.o swtch.o syscall.o sysfile.o sysproc.o timer.o trapasm.o trap.o uart.o vectors.o vm.o  -b binary initcode entryother
+objdump -S kernel > kernel.asm
+objdump -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel.sym
+dd if=/dev/zero of=xv6.img count=10000
+dd if=bootblock of=xv6.img conv=notrunc
+dd if=kernel of=xv6.img seek=1 conv=notrunc
+qemu-system-i386 -nographic -serial mon:stdio -hdb fs.img xv6.img -smp 6 -m 512 
+xv6...
+init process on cpu 0 
+init queue sline 
+finished in 0 ticks
+init queue dline 
+finished in 0 ticks
+cpu1: starting
+cpu2: starting
+cpu3: starting
+cpu4: starting
+cpu5: starting
+inserting node to sline
+inserting node to dline
+queue dline has size 0
+queue sline has size 0
+cpu0: starting
+datapid 1 exec 0 ticks cpu 1 at 1
+sb: size 1000 nblocks 941 ninodes 200 nlog 30 logstart 2 inodestart 32 bmap start 58
+datapid 1 exec 3 ticks cpu 5 at 15
+datapid 1 exec 4 ticks cpu 0 at 45
+datapid 1 exec 2 ticks cpu 2 at 102
+datapid 1 exec 11 ticks cpu 3 at 141
+init: starting sh
+inserting node to sline
+inserting node to dline
+queue dline has size 1
+queue sline has size 1
+datapid 2 exec 0 ticks cpu 5 at 253
+datapid 2 exec 1 ticks cpu 0 at 271
+datapid 2 exec 1 ticks cpu 1 at 365
+datapid 2 exec 1 ticks cpu 2 at 434
+datapid 2 exec 3 ticks cpu 3 at 531
+usertests starting
+createdelete test
+inserting node to sline
+inserting node to dline
+queue dline has size 2
+queue sline has size 2
+inserting node to sline
+inserting node to dline
+queue dline has size 3
+queue sline has size 3
+datapid 3 exec 2 ticks cpu 2 at 877
+datapid 2 exec 0 ticks cpu 2 at 880
+datapid 3 exec 3 ticks cpu 1 at 879
+inserting node to sline
+inserting node to dline
+queue dline has size 4
+queue sline has size 4
+datapid 4 exec 2 ticks cpu 3 at 881
+datapid 3 exec 2 ticks cpu 5 at 883
+inserting node to sline
+inserting node to dline
+queue dline has size 5
+queue sline has size 5
+datapid 5 exec 4 ticks cpu 3 at 902
+datapid 6 exec 0 ticks cpu 2 at 915
+datapid 5 exec 2 ticks cpu 1 at 922
+datapid 6 exec 2 ticks cpu 1 at 922
+datapid 5 exec 0 ticks cpu 1 at 924
+datapid 6 exec 0 ticks cpu 1 at 924
+datapid 4 exec 2 ticks cpu 5 at 922
+datapid 3 exec 1 ticks cpu 0 at 923
+datapid 4 exec 2 ticks cpu 0 at 923
+datapid 6 exec 2 ticks cpu 0 at 923
+datapid 3 exec 0 ticks cpu 0 at 925
+datapid 4 exec 0 ticks cpu 0 at 925
+datapid 5 exec 3 ticks cpu 5 at 924
+datapid 3 exec 2 ticks cpu 0 at 926
+datapid 4 exec 3 ticks cpu 0 at 926
+datapid 6 exec 3 ticks cpu 0 at 926
+datapid 4 exec 1 ticks cpu 0 at 929
+datapid 6 exec 3 ticks cpu 5 at 931
+datapid 3 exec 0 ticks cpu 5 at 934
+datapid 5 exec 1 ticks cpu 5 at 934
+datapid 3 exec 0 ticks cpu 5 at 935
+datapid 6 exec 2 ticks cpu 0 at 933
+datapid 4 exec 3 ticks cpu 1 at 934
+datapid 5 exec 2 ticks cpu 5 at 935
+datapid 3 exec 0 ticks cpu 5 at 937
+datapid 5 exec 1 ticks cpu 5 at 937
+datapid 3 exec 0 ticks cpu 5 at 938
+datapid 4 exec 0 ticks cpu 5 at 938
+datapid 5 exec 0 ticks cpu 5 at 938
+datapid 6 exec 0 ticks cpu 5 at 938
+datapid 3 exec 0 ticks cpu 5 at 938
+datapid 5 exec 0 ticks cpu 0 at 939
+datapid 6 exec 1 ticks cpu 0 at 939
+datapid 4 exec 3 ticks cpu 5 at 938
+datapid 3 exec 0 ticks cpu 5 at 941
+datapid 4 exec 0 ticks cpu 5 at 941
+datapid 2 exec 1 ticks cpu 1 at 941
+datapid 6 exec 1 ticks cpu 1 at 941
+datapid 2 exec 0 ticks cpu 1 at 942
+datapid 5 exec 3 ticks cpu 5 at 941
+datapid 4 exec 1 ticks cpu 0 at 943
+datapid 4 exec 5 ticks cpu 5 at 949
+datapid 4 exec 2 ticks cpu 1 at 988
+datapid 6 exec 1 ticks cpu 1 at 1138
+datapid 5 exec 1 ticks cpu 0 at 1139
+datapid 4 exec 1 ticks cpu 1 at 1141
+datapid 5 exec 1 ticks cpu 1 at 1141
+datapid 6 exec 1 ticks cpu 1 at 1141
+datapid 5 exec 2 ticks cpu 4 at 1140
+datapid 4 exec 4 ticks cpu 2 at 1140
+datapid 6 exec 1 ticks cpu 0 at 1143
+datapid 5 exec 1 ticks cpu 2 at 1144
+datapid 4 exec 3 ticks cpu 1 at 1144
+datapid 6 exec 4 ticks cpu 1 at 1144
+datapid 4 exec 0 ticks cpu 1 at 1148
+datapid 6 exec 0 ticks cpu 1 at 1148
+datapid 2 exec 0 ticks cpu 1 at 1148
+datapid 4 exec 0 ticks cpu 1 at 1148
+datapid 5 exec 0 ticks cpu 1 at 1148
+datapid 5 exec 0 ticks cpu 5 at 1155
+datapid 4 exec 0 ticks cpu 5 at 1155
+datapid 5 exec 0 ticks cpu 5 at 1155
+datapid 2 exec 0 ticks cpu 5 at 1155
+datapid 5 exec 0 ticks cpu 5 at 1155
+datapid 2 exec 0 ticks cpu 5 at 1155
+datapid 5 exec 0 ticks cpu 5 at 1155
+datapid 5 exec 1 ticks cpu 0 at 1161
+datapid 2 exec 0 ticks cpu 5 at 1531
+datapid 2 exec 1 ticks cpu 0 at 1540
+datapid 2 exec 0 ticks cpu 1 at 1599
+datapid 2 exec 6 ticks cpu 2 at 1600
+createdelete ok
+linkunlink test
+inserting node to sline
+inserting node to dline
+queue dline has size 6
+queue sline has size 6
+datapid 7 exec 2 ticks cpu 2 at 1636
+datapid 2 exec 1 ticks cpu 2 at 1659
+datapid 7 exec 2 ticks cpu 0 at 1675
+datapid 7 exec 0 ticks cpu 5 at 1678
+datapid 2 exec 2 ticks cpu 5 at 1704
+datapid 2 exec 0 ticks cpu 0 at 1707
+datapid 7 exec 6 ticks cpu 1 at 1704
+datapid 2 exec 3 ticks cpu 1 at 1711
+datapid 7 exec 2 ticks cpu 0 at 1745
+datapid 7 exec 0 ticks cpu 5 at 1757
+datapid 7 exec 0 ticks cpu 1 at 1769
+datapid 2 exec 0 ticks cpu 0 at 1793
+datapid 2 exec 0 ticks cpu 5 at 1794
+datapid 7 exec 0 ticks cpu 5 at 1794
+datapid 2 exec 0 ticks cpu 5 at 1794
+datapid 7 exec 1 ticks cpu 0 at 1805
+datapid 2 exec 1 ticks cpu 1 at 1806
+datapid 7 exec 1 ticks cpu 1 at 1815
+datapid 2 exec 0 ticks cpu 1 at 1861
+datapid 2 exec 1 ticks cpu 0 at 1895
+linkunlink ok
+concreate test
+inserting node to sline
+inserting node to dline
+queue dline has size 7
+queue sline has size 7
+datapid 8 exec 1 ticks cpu 0 at 4732
+datapid 2 exec 0 ticks cpu 0 at 4741
+datapid 8 exec 2 ticks cpu 5 at 4785
+datapid 2 exec 0 ticks cpu 5 at 4787
+inserting node to sline
+inserting node to dline
+queue dline has size 8
+queue sline has size 8
+datapid 9 exec 2 ticks cpu 5 at 4805
+datapid 2 exec 0 ticks cpu 5 at 4807
+datapid 9 exec 4 ticks cpu 5 at 4807
+datapid 2 exec 0 ticks cpu 5 at 4811
+datapid 9 exec 0 ticks cpu 5 at 4811
+datapid 2 exec 0 ticks cpu 5 at 4811
+datapid 9 exec 0 ticks cpu 5 at 4811
+datapid 2 exec 0 ticks cpu 5 at 4811
+datapid 9 exec 2 ticks cpu 5 at 4811
+datapid 2 exec 0 ticks cpu 5 at 4813
+datapid 9 exec 2 ticks cpu 5 at 4813
+datapid 2 exec 2 ticks cpu 5 at 4815
+datapid 9 exec 1 ticks cpu 0 at 4816
+datapid 2 exec 3 ticks cpu 0 at 4821
+datapid 9 exec 3 ticks cpu 5 at 4822
+inserting node to sline
+inserting node to dline
+queue dline has size 9
+queue sline has size 9
+datapid 2 exec 2 ticks cpu 5 at 4852
+datapid 10 exec 5 ticks cpu 5 at 4854
+datapid 2 exec 0 ticks cpu 5 at 4859
+datapid 10 exec 0 ticks cpu 5 at 4859
+datapid 2 exec 0 ticks cpu 5 at 4859
+datapid 10 exec 5 ticks cpu 5 at 4859
+datapid 2 exec 0 ticks cpu 5 at 4864
+datapid 10 exec 0 ticks cpu 5 at 4864
+datapid 2 exec 0 ticks cpu 5 at 4864
+datapid 10 exec 3 ticks cpu 5 at 4864
+datapid 2 exec 0 ticks cpu 5 at 4867
+datapid 10 exec 2 ticks cpu 5 at 4867
+datapid 2 exec 0 ticks cpu 5 at 4869
+datapid 10 exec 0 ticks cpu 5 at 4869
+datapid 2 exec 0 ticks cpu 5 at 4869
+datapid 10 exec 0 ticks cpu 5 at 4869
+inserting node to sline
+inserting node to dline
+queue dline has size 10
+queue sline has size 10
+datapid 2 exec 4 ticks cpu 5 at 4869
+datapid 11 exec 3 ticks cpu 5 at 4889
+datapid 2 exec 0 ticks cpu 5 at 4892
+datapid 11 exec 3 ticks cpu 5 at 4892
+datapid 2 exec 0 ticks cpu 5 at 4895
+datapid 11 exec 4 ticks cpu 5 at 4895
+datapid 2 exec 0 ticks cpu 5 at 4899
+datapid 11 exec 0 ticks cpu 5 at 4899
+datapid 2 exec 0 ticks cpu 5 at 4899
+datapid 11 exec 4 ticks cpu 5 at 4899
+datapid 2 exec 0 ticks cpu 5 at 4906
+datapid 11 exec 0 ticks cpu 5 at 4917
+inserting node to sline
+inserting node to dline
+queue dline has size 11
+queue sline has size 11
+datapid 2 exec 2 ticks cpu 5 at 4917
+datapid 12 exec 1 ticks cpu 0 at 4928
+datapid 12 exec 0 ticks cpu 5 at 4938
+inserting node to sline
+inserting node to dline
+queue dline has size 12
+queue sline has size 12
+datapid 2 exec 4 ticks cpu 5 at 5007
+datapid 2 exec 1 ticks cpu 0 at 5011
+datapid 13 exec 1 ticks cpu 0 at 5013
+datapid 2 exec 0 ticks cpu 0 at 5017
+datapid 13 exec 1 ticks cpu 0 at 5017
+datapid 13 exec 2 ticks cpu 1 at 5018
+datapid 2 exec 1 ticks cpu 0 at 5021
+datapid 2 exec 5 ticks cpu 1 at 5036
+datapid 13 exec 1 ticks cpu 0 at 5058
+datapid 2 exec 1 ticks cpu 0 at 5063
+inserting node to sline
+inserting node to dline
+queue dline has size 13
+queue sline has size 13
+datapid 14 exec 4 ticks cpu 1 at 5093
+datapid 2 exec 4 ticks cpu 1 at 5116
+datapid 14 exec 0 ticks cpu 5 at 5140
+datapid 14 exec 0 ticks cpu 0 at 5150
+inserting node to sline
+inserting node to dline
+queue dline has size 14
+queue sline has size 14
+datapid 2 exec 2 ticks cpu 5 at 5176
+datapid 2 exec 1 ticks cpu 0 at 5181
+datapid 15 exec 2 ticks cpu 0 at 5185
+datapid 2 exec 0 ticks cpu 0 at 5188
+datapid 15 exec 1 ticks cpu 0 at 5188
+datapid 2 exec 1 ticks cpu 0 at 5198
+datapid 15 exec 1 ticks cpu 1 at 5266
+inserting node to sline
+inserting node to dline
+queue dline has size 15
+queue sline has size 15
+datapid 2 exec 0 ticks cpu 1 at 5279
+datapid 16 exec 6 ticks cpu 1 at 5280
+datapid 16 exec 7 ticks cpu 2 at 5280
+datapid 16 exec 1 ticks cpu 0 at 5316
+inserting node to sline
+inserting node to dline
+queue dline has size 16
+queue sline has size 16
+datapid 17 exec 1 ticks cpu 5 at 5354
+datapid 2 exec 0 ticks cpu 5 at 5355
+datapid 17 exec 1 ticks cpu 5 at 5355
+datapid 2 exec 0 ticks cpu 5 at 5356
+datapid 17 exec 2 ticks cpu 5 at 5356
+datapid 2 exec 0 ticks cpu 5 at 5358
+datapid 17 exec 0 ticks cpu 5 at 5358
+datapid 2 exec 0 ticks cpu 5 at 5358
+datapid 17 exec 0 ticks cpu 5 at 5358
+datapid 2 exec 0 ticks cpu 5 at 5358
+datapid 17 exec 0 ticks cpu 5 at 5358
+datapid 2 exec 0 ticks cpu 5 at 5358
+datapid 17 exec 1 ticks cpu 5 at 5358
+datapid 2 exec 0 ticks cpu 5 at 5359
+datapid 17 exec 0 ticks cpu 5 at 5359
+datapid 2 exec 0 ticks cpu 5 at 5359
+datapid 17 exec 0 ticks cpu 5 at 5359
+inserting node to sline
+inserting node to dline
+queue dline has size 17
+queue sline has size 17
+datapid 2 exec 6 ticks cpu 5 at 5359
+datapid 2 exec 1 ticks cpu 0 at 5374
+datapid 18 exec 3 ticks cpu 1 at 5374
+datapid 18 exec 0 ticks cpu 0 at 5383
+datapid 18 exec 0 ticks cpu 5 at 5387
+inserting node to sline
+inserting node to dline
+queue dline has size 18
+queue sline has size 18
+datapid 2 exec 3 ticks cpu 5 at 5425
+datapid 2 exec 1 ticks cpu 0 at 5441
+datapid 19 exec 1 ticks cpu 0 at 5442
+datapid 2 exec 1 ticks cpu 0 at 5457
+datapid 2 exec 2 ticks cpu 1 at 5457
+datapid 19 exec 0 ticks cpu 1 at 5459
+datapid 19 exec 0 ticks cpu 5 at 5459
+datapid 19 exec 2 ticks cpu 2 at 5468
+datapid 19 exec 1 ticks cpu 0 at 5484
+inserting node to sline
+inserting node to dline
+queue dline has size 19
+queue sline has size 19
+datapid 2 exec 1 ticks cpu 0 at 5518
+datapid 2 exec 0 ticks cpu 5 at 5523
+datapid 20 exec 1 ticks cpu 0 at 5522
+datapid 2 exec 1 ticks cpu 0 at 5524
+datapid 20 exec 1 ticks cpu 0 at 5586
+inserting node to sline
+inserting node to dline
+queue dline has size 20
+queue sline has size 20
+datapid 21 exec 9 ticks cpu 5 at 5602
+datapid 2 exec 0 ticks cpu 5 at 5611
+datapid 21 exec 0 ticks cpu 5 at 5611
+datapid 2 exec 0 ticks cpu 5 at 5611
+datapid 21 exec 0 ticks cpu 5 at 5611
+datapid 21 exec 1 ticks cpu 0 at 5611
+datapid 2 exec 4 ticks cpu 5 at 5611
+datapid 2 exec 1 ticks cpu 1 at 5630
+datapid 21 exec 0 ticks cpu 5 at 5641
+inserting node to sline
+inserting node to dline
+queue dline has size 21
+queue sline has size 21
+datapid 2 exec 5 ticks cpu 5 at 5641
+datapid 2 exec 0 ticks cpu 0 at 5647
+datapid 22 exec 2 ticks cpu 5 at 5646
+datapid 22 exec 2 ticks cpu 0 at 5648
+datapid 2 exec 0 ticks cpu 0 at 5651
+datapid 22 exec 1 ticks cpu 0 at 5651
+datapid 2 exec 1 ticks cpu 5 at 5652
+datapid 2 exec 1 ticks cpu 0 at 5653
+datapid 22 exec 4 ticks cpu 5 at 5668
+inserting node to sline
+inserting node to dline
+queue dline has size 22
+queue sline has size 22
+datapid 2 exec 2 ticks cpu 2 at 5682
+datapid 23 exec 5 ticks cpu 2 at 5693
+datapid 2 exec 5 ticks cpu 5 at 5693
+datapid 23 exec 1 ticks cpu 0 at 5745
+datapid 2 exec 1 ticks cpu 0 at 5748
+inserting node to sline
+inserting node to dline
+queue dline has size 23
+queue sline has size 23
+datapid 24 exec 3 ticks cpu 1 at 5795
+datapid 24 exec 1 ticks cpu 0 at 5854
+datapid 2 exec 1 ticks cpu 0 at 5862
+datapid 24 exec 6 ticks cpu 5 at 5860
+datapid 24 exec 1 ticks cpu 0 at 5874
+inserting node to sline
+inserting node to dline
+queue dline has size 24
+queue sline has size 24
+datapid 2 exec 2 ticks cpu 1 at 5894
+datapid 2 exec 2 ticks cpu 2 at 5895
+datapid 2 exec 2 ticks cpu 3 at 5909
+datapid 2 exec 0 ticks cpu 5 at 5915
+datapid 2 exec 1 ticks cpu 0 at 5915
+datapid 25 exec 2 ticks cpu 3 at 5915
+datapid 25 exec 2 ticks cpu 0 at 5957
+datapid 2 exec 1 ticks cpu 0 at 5965
+inserting node to sline
+inserting node to dline
+queue dline has size 25
+queue sline has size 25
+datapid 2 exec 3 ticks cpu 3 at 5979
+datapid 26 exec 0 ticks cpu 3 at 5994
+datapid 26 exec 1 ticks cpu 4 at 5993
+datapid 26 exec 0 ticks cpu 5 at 6027
+inserting node to sline
+inserting node to dline
+queue dline has size 26
+queue sline has size 26
+datapid 2 exec 2 ticks cpu 5 at 6027
+datapid 27 exec 9 ticks cpu 5 at 6029
+datapid 2 exec 0 ticks cpu 5 at 6038
+datapid 27 exec 0 ticks cpu 5 at 6038
+datapid 2 exec 0 ticks cpu 5 at 6038
+datapid 27 exec 2 ticks cpu 5 at 6038
+datapid 2 exec 6 ticks cpu 5 at 6042
+datapid 27 exec 3 ticks cpu 0 at 6068
+inserting node to sline
+inserting node to dline
+queue dline has size 27
+queue sline has size 27
+datapid 2 exec 1 ticks cpu 0 at 6076
+datapid 28 exec 2 ticks cpu 0 at 6088
+datapid 2 exec 1 ticks cpu 0 at 6097
+datapid 28 exec 0 ticks cpu 5 at 6148
+inserting node to sline
+inserting node to dline
+queue dline has size 28
+queue sline has size 28
+datapid 2 exec 3 ticks cpu 5 at 6148
+datapid 29 exec 3 ticks cpu 5 at 6153
+datapid 2 exec 0 ticks cpu 5 at 6156
+datapid 29 exec 0 ticks cpu 5 at 6156
+datapid 2 exec 0 ticks cpu 5 at 6156
+datapid 29 exec 0 ticks cpu 5 at 6156
+datapid 2 exec 0 ticks cpu 5 at 6156
+datapid 29 exec 1 ticks cpu 5 at 6156
+datapid 2 exec 0 ticks cpu 5 at 6157
+datapid 29 exec 0 ticks cpu 5 at 6157
+datapid 29 exec 1 ticks cpu 0 at 6157
+datapid 2 exec 4 ticks cpu 5 at 6157
+datapid 2 exec 0 ticks cpu 0 at 6164
+datapid 29 exec 6 ticks cpu 5 at 6161
+datapid 29 exec 1 ticks cpu 0 at 6192
+inserting node to sline
+inserting node to dline
+queue dline has size 29
+queue sline has size 29
+datapid 2 exec 2 ticks cpu 5 at 6220
+datapid 30 exec 13 ticks cpu 5 at 6222
+datapid 2 exec 0 ticks cpu 5 at 6235
+datapid 30 exec 0 ticks cpu 5 at 6235
+datapid 2 exec 0 ticks cpu 5 at 6235
+datapid 30 exec 3 ticks cpu 5 at 6235
+datapid 2 exec 0 ticks cpu 5 at 6238
+datapid 30 exec 2 ticks cpu 5 at 6238
+datapid 2 exec 0 ticks cpu 5 at 6240
+datapid 2 exec 1 ticks cpu 0 at 6240
+datapid 30 exec 5 ticks cpu 5 at 6240
+datapid 2 exec 0 ticks cpu 5 at 6245
+datapid 30 exec 0 ticks cpu 5 at 6245
+datapid 2 exec 0 ticks cpu 5 at 6245
+datapid 30 exec 0 ticks cpu 5 at 6245
+datapid 2 exec 0 ticks cpu 5 at 6245
+datapid 30 exec 0 ticks cpu 5 at 6245
+inserting node to sline
+inserting node to dline
+queue dline has size 30
+datapid 2 exec 1 ticks cpu 5 at 6245
+queue sline has size 30
+datapid 31 exec 6 ticks cpu 5 at 6249
+datapid 31 exec 0 ticks cpu 1 at 6262
+datapid 31 exec 1 ticks cpu 0 at 6298
+inserting node to sline
+inserting node to dline
+queue dline has size 31
+queue sline has size 31
+datapid 2 exec 2 ticks cpu 5 at 6327
+datapid 2 exec 0 ticks cpu 0 at 6330
+datapid 32 exec 6 ticks cpu 5 at 6329
+datapid 2 exec 0 ticks cpu 5 at 6335
+datapid 32 exec 0 ticks cpu 5 at 6335
+datapid 2 exec 0 ticks cpu 5 at 6335
+datapid 32 exec 0 ticks cpu 5 at 6335
+datapid 2 exec 0 ticks cpu 5 at 6335
+datapid 32 exec 0 ticks cpu 5 at 6335
+datapid 2 exec 0 ticks cpu 5 at 6337
+datapid 2 exec 0 ticks cpu 1 at 6346
+datapid 32 exec 2 ticks cpu 0 at 6358
+inserting node to sline
+inserting node to dline
+queue dline has size 32
+queue sline has size 32
+datapid 33 exec 5 ticks cpu 1 at 6371
+datapid 2 exec 1 ticks cpu 0 at 6407
+datapid 2 exec 0 ticks cpu 1 at 6414
+datapid 33 exec 0 ticks cpu 5 at 6441
+inserting node to sline
+inserting node to dline
+queue dline has size 33
+queue sline has size 33
+datapid 2 exec 2 ticks cpu 5 at 6441
+datapid 34 exec 7 ticks cpu 5 at 6443
+datapid 2 exec 0 ticks cpu 5 at 6473
+datapid 34 exec 0 ticks cpu 5 at 6521
+inserting node to sline
+inserting node to dline
+queue dline has size 34
+queue sline has size 34
+datapid 2 exec 4 ticks cpu 5 at 6567
+datapid 35 exec 1 ticks cpu 0 at 6578
+datapid 2 exec 1 ticks cpu 0 at 6618
+datapid 35 exec 0 ticks cpu 5 at 6663
+inserting node to sline
+inserting node to dline
+queue dline has size 35
+queue sline has size 35
+datapid 2 exec 3 ticks cpu 5 at 6663
+datapid 2 exec 9 ticks cpu 3 at 6667
+datapid 36 exec 11 ticks cpu 4 at 6667
+datapid 2 exec 3 ticks cpu 4 at 6703
+datapid 36 exec 0 ticks cpu 5 at 6717
+datapid 36 exec 1 ticks cpu 0 at 6718
+inserting node to sline
+inserting node to dline
+queue dline has size 36
+queue sline has size 36
+datapid 2 exec 13 ticks cpu 5 at 6764
+datapid 37 exec 2 ticks cpu 5 at 6780
+datapid 2 exec 0 ticks cpu 5 at 6782
+datapid 37 exec 1 ticks cpu 5 at 6782
+datapid 2 exec 0 ticks cpu 5 at 6783
+datapid 37 exec 0 ticks cpu 5 at 6783
+datapid 2 exec 0 ticks cpu 5 at 6783
+datapid 37 exec 5 ticks cpu 5 at 6783
+datapid 2 exec 0 ticks cpu 5 at 6788
+datapid 37 exec 0 ticks cpu 5 at 6788
+datapid 2 exec 0 ticks cpu 5 at 6788
+datapid 37 exec 0 ticks cpu 5 at 6788
+datapid 2 exec 0 ticks cpu 5 at 6788
+datapid 2 exec 1 ticks cpu 0 at 6789
+datapid 37 exec 4 ticks cpu 5 at 6788
+datapid 2 exec 0 ticks cpu 5 at 6792
+datapid 37 exec 0 ticks cpu 5 at 6792
+inserting node to sline
+datapid 2 exec 9 ticks cpu 5 at 6792
+inserting node to dline
+queue dline has size 37
+queue sline has size 37
+datapid 38 exec 5 ticks cpu 5 at 6812
+datapid 2 exec 0 ticks cpu 5 at 6820
+datapid 38 exec 1 ticks cpu 0 at 6873
+inserting node to sline
+inserting node to dline
+queue dline has size 38
+queue sline has size 38
+datapid 2 exec 1 ticks cpu 0 at 6887
+datapid 39 exec 1 ticks cpu 1 at 6888
+datapid 2 exec 0 ticks cpu 1 at 6894
+datapid 39 exec 1 ticks cpu 0 at 6918
+datapid 2 exec 1 ticks cpu 0 at 6926
+inserting node to sline
+inserting node to dline
+queue dline has size 39
+queue sline has size 39
+datapid 40 exec 3 ticks cpu 5 at 7010
+datapid 2 exec 0 ticks cpu 5 at 7013
+datapid 40 exec 0 ticks cpu 5 at 7013
+datapid 2 exec 0 ticks cpu 5 at 7013
+datapid 40 exec 0 ticks cpu 5 at 7013
+datapid 2 exec 0 ticks cpu 5 at 7013
+datapid 40 exec 1 ticks cpu 5 at 7013
+datapid 2 exec 0 ticks cpu 5 at 7014
+datapid 40 exec 0 ticks cpu 5 at 7014
+datapid 2 exec 0 ticks cpu 5 at 7014
+datapid 40 exec 0 ticks cpu 5 at 7014
+datapid 2 exec 0 ticks cpu 5 at 7014
+datapid 40 exec 0 ticks cpu 5 at 7014
+datapid 2 exec 0 ticks cpu 5 at 7014
+datapid 40 exec 0 ticks cpu 5 at 7014
+inserting node to sline
+inserting node to dline
+queue dline has size 40
+queue sline has size 40
+datapid 2 exec 14 ticks cpu 5 at 7014
+datapid 41 exec 0 ticks cpu 5 at 7038
+datapid 2 exec 0 ticks cpu 5 at 7038
+datapid 41 exec 0 ticks cpu 5 at 7038
+datapid 41 exec 1 ticks cpu 0 at 7087
+inserting node to sline
+inserting node to dline
+queue dline has size 41
+queue sline has size 41
+datapid 2 exec 2 ticks cpu 5 at 7102
+datapid 2 exec 1 ticks cpu 0 at 7104
+datapid 42 exec 6 ticks cpu 5 at 7104
+datapid 2 exec 0 ticks cpu 5 at 7110
+datapid 42 exec 3 ticks cpu 5 at 7110
+datapid 2 exec 0 ticks cpu 5 at 7113
+datapid 42 exec 0 ticks cpu 5 at 7113
+datapid 2 exec 0 ticks cpu 5 at 7113
+datapid 42 exec 2 ticks cpu 5 at 7113
+datapid 2 exec 4 ticks cpu 5 at 7120
+datapid 42 exec 1 ticks cpu 0 at 7143
+inserting node to sline
+datapid 2 exec 1 ticks cpu 0 at 7145
+inserting node to dline
+queue dline has size 42
+queue sline has size 42
+datapid 43 exec 1 ticks cpu 0 at 7158
+datapid 2 exec 0 ticks cpu 0 at 7179
+datapid 43 exec 0 ticks cpu 0 at 7179
+datapid 43 exec 2 ticks cpu 5 at 7178
+datapid 43 exec 3 ticks cpu 1 at 7195
+inserting node to sline
+inserting node to dline
+queue dline has size 43
+queue sline has size 43
+datapid 2 exec 3 ticks cpu 1 at 7239
+datapid 2 exec 0 ticks cpu 5 at 7243
+datapid 44 exec 4 ticks cpu 1 at 7243
+datapid 44 exec 1 ticks cpu 0 at 7291
+datapid 44 exec 5 ticks cpu 5 at 7303
+inserting node to sline
+inserting node to dline
+queue dline has size 44
+queue sline has size 44
+datapid 2 exec 1 ticks cpu 5 at 7329
+datapid 45 exec 3 ticks cpu 5 at 7357
+datapid 2 exec 0 ticks cpu 5 at 7360
+datapid 45 exec 0 ticks cpu 5 at 7360
+datapid 2 exec 0 ticks cpu 5 at 7360
+datapid 45 exec 0 ticks cpu 5 at 7360
+datapid 2 exec 0 ticks cpu 5 at 7360
+datapid 45 exec 2 ticks cpu 5 at 7360
+datapid 2 exec 1 ticks cpu 0 at 7361
+datapid 2 exec 3 ticks cpu 5 at 7370
+datapid 45 exec 1 ticks cpu 0 at 7394
+inserting node to sline
+inserting node to dline
+queue dline has size 45
+queue sline has size 45
+datapid 2 exec 0 ticks cpu 0 at 7417
+datapid 46 exec 4 ticks cpu 5 at 7415
+datapid 2 exec 0 ticks cpu 5 at 7419
+datapid 46 exec 0 ticks cpu 5 at 7419
+datapid 2 exec 0 ticks cpu 5 at 7419
+datapid 46 exec 0 ticks cpu 5 at 7419
+datapid 2 exec 0 ticks cpu 5 at 7419
+datapid 46 exec 0 ticks cpu 5 at 7419
+datapid 2 exec 0 ticks cpu 5 at 7419
+datapid 46 exec 2 ticks cpu 5 at 7419
+datapid 2 exec 0 ticks cpu 5 at 7421
+datapid 46 exec 9 ticks cpu 5 at 7421
+datapid 2 exec 0 ticks cpu 5 at 7430
+datapid 46 exec 0 ticks cpu 5 at 7430
+datapid 2 exec 0 ticks cpu 5 at 7430
+datapid 46 exec 0 ticks cpu 5 at 7430
+inserting node to sline
+inserting node to dline
+queue dline has size 46
+queue sline has size 46
+datapid 2 exec 3 ticks cpu 5 at 7430
+datapid 2 exec 0 ticks cpu 1 at 7440
+datapid 47 exec 0 ticks cpu 1 at 7441
+datapid 2 exec 5 ticks cpu 1 at 7485
+datapid 47 exec 4 ticks cpu 5 at 7535
+datapid 2 exec 3 ticks cpu 5 at 7545
+inserting node to sline
+inserting node to dline
+queue dline has size 47
+queue sline has size 47
+datapid 48 exec 7 ticks cpu 5 at 7552
+datapid 2 exec 0 ticks cpu 5 at 7560
+datapid 48 exec 0 ticks cpu 5 at 7608
+inserting node to sline
+inserting node to dline
+queue dline has size 48
+queue sline has size 48
+datapid 2 exec 1 ticks cpu 5 at 7608
+datapid 49 exec 0 ticks cpu 5 at 7609
+datapid 49 exec 3 ticks cpu 1 at 7608
+datapid 49 exec 1 ticks cpu 0 at 7625
+datapid 49 exec 1 ticks cpu 2 at 7673
+datapid 2 exec 0 ticks cpu 2 at 7675
+inserting node to sline
+inserting node to dline
+queue dline has size 49
+queue sline has size 49
+datapid 50 exec 6 ticks cpu 2 at 7694
+datapid 2 exec 6 ticks cpu 5 at 7694
+datapid 2 exec 1 ticks cpu 0 at 7716
+datapid 50 exec 1 ticks cpu 0 at 7727
+inserting node to sline
+inserting node to dline
+queue dline has size 50
+datapid 2 exec 1 ticks cpu 0 at 7729
+datapid 2 exec 1 ticks cpu 1 at 7730
+queue sline has size 50
+datapid 51 exec 2 ticks cpu 1 at 7733
+datapid 51 exec 1 ticks cpu 2 at 7738
+datapid 2 exec 1 ticks cpu 1 at 7739
+datapid 51 exec 1 ticks cpu 0 at 7764
+inserting node to sline
+inserting node to dline
+queue dline has size 51
+queue sline has size 51
+datapid 52 exec 1 ticks cpu 0 at 7825
+datapid 2 exec 0 ticks cpu 0 at 7838
+inserting node to sline
+inserting node to dline
+queue dline has size 52
+queue sline has size 52
+datapid 2 exec 1 ticks cpu 2 at 7951
+datapid 53 exec 0 ticks cpu 2 at 7952
+datapid 2 exec 1 ticks cpu 2 at 7982
+datapid 53 exec 1 ticks cpu 0 at 7994
+datapid 2 exec 1 ticks cpu 0 at 7999
+inserting node to sline
+inserting node to dline
+queue dline has size 53
+queue sline has size 53
+datapid 54 exec 1 ticks cpu 1 at 8021
+datapid 54 exec 0 ticks cpu 0 at 8077
+inserting node to sline
+inserting node to dline
+queue dline has size 54
+queue sline has size 54
+datapid 55 exec 0 ticks cpu 5 at 8112
+datapid 55 exec 3 ticks cpu 0 at 8120
+datapid 55 exec 1 ticks cpu 1 at 8127
+inserting node to sline
+inserting node to dline
+queue dline has size 55
+queue sline has size 55
+datapid 2 exec 1 ticks cpu 5 at 8178
+datapid 56 exec 4 ticks cpu 5 at 8213
+datapid 2 exec 0 ticks cpu 5 at 8217
+datapid 56 exec 0 ticks cpu 5 at 8217
+datapid 2 exec 0 ticks cpu 5 at 8217
+datapid 56 exec 0 ticks cpu 5 at 8217
+datapid 2 exec 0 ticks cpu 5 at 8217
+datapid 56 exec 0 ticks cpu 5 at 8217
+datapid 2 exec 0 ticks cpu 5 at 8217
+datapid 56 exec 0 ticks cpu 5 at 8217
+datapid 2 exec 0 ticks cpu 5 at 8217
+datapid 56 exec 1 ticks cpu 5 at 8217
+datapid 2 exec 0 ticks cpu 5 at 8218
+datapid 56 exec 0 ticks cpu 5 at 8218
+inserting node to sline
+inserting node to dline
+queue dline has size 56
+queue sline has size 56
+datapid 2 exec 3 ticks cpu 5 at 8218
+datapid 57 exec 7 ticks cpu 5 at 8233
+datapid 2 exec 0 ticks cpu 5 at 8240
+datapid 57 exec 0 ticks cpu 5 at 8240
+datapid 2 exec 0 ticks cpu 5 at 8240
+datapid 57 exec 0 ticks cpu 5 at 8240
+datapid 2 exec 0 ticks cpu 5 at 8240
+datapid 57 exec 0 ticks cpu 5 at 8240
+datapid 2 exec 0 ticks cpu 5 at 8240
+datapid 57 exec 2 ticks cpu 5 at 8240
+datapid 2 exec 0 ticks cpu 5 at 8242
+datapid 57 exec 0 ticks cpu 5 at 8242
+datapid 2 exec 0 ticks cpu 5 at 8242
+datapid 57 exec 3 ticks cpu 5 at 8242
+inserting node to sline
+inserting node to dline
+queue dline has size 57
+queue sline has size 57
+datapid 2 exec 3 ticks cpu 5 at 8249
+datapid 58 exec 0 ticks cpu 5 at 8252
+datapid 58 exec 1 ticks cpu 0 at 8256
+datapid 58 exec 3 ticks cpu 1 at 8256
+datapid 58 exec 2 ticks cpu 2 at 8272
+inserting node to sline
+inserting node to dline
+queue dline has size 58
+queue sline has size 58
+datapid 2 exec 6 ticks cpu 5 at 8303
+datapid 59 exec 2 ticks cpu 5 at 8339
+datapid 2 exec 0 ticks cpu 5 at 8341
+datapid 59 exec 0 ticks cpu 5 at 8341
+datapid 2 exec 0 ticks cpu 5 at 8341
+datapid 2 exec 1 ticks cpu 0 at 8342
+datapid 59 exec 4 ticks cpu 5 at 8341
+datapid 2 exec 0 ticks cpu 5 at 8345
+datapid 59 exec 0 ticks cpu 5 at 8345
+datapid 2 exec 0 ticks cpu 5 at 8345
+datapid 59 exec 0 ticks cpu 5 at 8345
+datapid 2 exec 0 ticks cpu 5 at 8345
+datapid 59 exec 2 ticks cpu 5 at 8345
+datapid 2 exec 4 ticks cpu 1 at 8345
+datapid 59 exec 0 ticks cpu 1 at 8350
+inserting node to sline
+inserting node to dline
+datapid 2 exec 1 ticks cpu 1 at 8350
+queue dline has size 59
+queue sline has size 59
+datapid 2 exec 2 ticks cpu 2 at 8359
+datapid 60 exec 0 ticks cpu 2 at 8362
+datapid 2 exec 0 ticks cpu 5 at 8362
+datapid 60 exec 2 ticks cpu 3 at 8374
+datapid 60 exec 0 ticks cpu 5 at 8396
+inserting node to sline
+inserting node to dline
+queue dline has size 60
+queue sline has size 60
+datapid 2 exec 2 ticks cpu 5 at 8396
+datapid 61 exec 5 ticks cpu 1 at 8407
+datapid 61 exec 3 ticks cpu 5 at 8413
+datapid 61 exec 1 ticks cpu 0 at 8464
+inserting node to sline
+inserting node to dline
+datapid 2 exec 1 ticks cpu 0 at 8466
+queue dline has size 61
+queue sline has size 61
+datapid 2 exec 0 ticks cpu 1 at 8469
+datapid 62 exec 0 ticks cpu 1 at 8470
+datapid 2 exec 0 ticks cpu 5 at 8470
+datapid 62 exec 4 ticks cpu 2 at 8469
+datapid 2 exec 1 ticks cpu 1 at 8509
+datapid 62 exec 1 ticks cpu 0 at 8512
+inserting node to sline
+inserting node to dline
+queue dline has size 62
+queue sline has size 62
+datapid 63 exec 2 ticks cpu 5 at 8530
+datapid 2 exec 1 ticks cpu 0 at 8532
+datapid 63 exec 2 ticks cpu 0 at 8532
+datapid 2 exec 0 ticks cpu 0 at 8534
+datapid 63 exec 1 ticks cpu 0 at 8534
+datapid 2 exec 1 ticks cpu 0 at 8539
+datapid 2 exec 2 ticks cpu 5 at 8542
+datapid 63 exec 1 ticks cpu 0 at 8558
+inserting node to sline
+inserting node to dline
+queue dline has size 63
+queue sline has size 63
+datapid 64 exec 0 ticks cpu 5 at 8584
+inserting node to sline
+inserting node to dline
+queue dline has size 64
+queue sline has size 64
+datapid 2 exec 4 ticks cpu 5 at 8628
+datapid 65 exec 3 ticks cpu 5 at 8632
+datapid 2 exec 0 ticks cpu 5 at 8635
+datapid 65 exec 1 ticks cpu 5 at 8635
+datapid 2 exec 1 ticks cpu 5 at 8639
+datapid 2 exec 1 ticks cpu 0 at 8648
+datapid 65 exec 0 ticks cpu 5 at 8671
+datapid 2 exec 0 ticks cpu 5 at 8671
+datapid 65 exec 0 ticks cpu 5 at 8671
+inserting node to sline
+inserting node to dline
+queue dline has size 65
+queue sline has size 65
+datapid 2 exec 2 ticks cpu 5 at 8671
+datapid 66 exec 4 ticks cpu 5 at 8694
+datapid 2 exec 0 ticks cpu 5 at 8698
+datapid 66 exec 1 ticks cpu 5 at 8698
+datapid 2 exec 0 ticks cpu 5 at 8699
+datapid 66 exec 2 ticks cpu 5 at 8699
+datapid 2 exec 1 ticks cpu 5 at 8715
+datapid 66 exec 4 ticks cpu 5 at 8725
+inserting node to sline
+inserting node to dline
+queue dline has size 66
+queue sline has size 66
+datapid 2 exec 6 ticks cpu 5 at 8729
+datapid 67 exec 2 ticks cpu 0 at 8737
+datapid 67 exec 0 ticks cpu 5 at 8748
+inserting node to sline
+inserting node to dline
+queue dline has size 67
+queue sline has size 67
+datapid 2 exec 1 ticks cpu 0 at 8780
+datapid 2 exec 1 ticks cpu 2 at 8804
+datapid 2 exec 0 ticks cpu 5 at 8807
+datapid 68 exec 2 ticks cpu 2 at 8807
+datapid 68 exec 1 ticks cpu 0 at 8852
+datapid 2 exec 0 ticks cpu 0 at 8854
+datapid 68 exec 0 ticks cpu 0 at 8854
+inserting node to sline
+inserting node to dline
+datapid 2 exec 1 ticks cpu 0 at 8854
+queue dline has size 68
+queue sline has size 68
+datapid 69 exec 1 ticks cpu 0 at 8858
+inserting node to sline
+inserting node to dline
+queue dline has size 69
+queue sline has size 69
+datapid 2 exec 1 ticks cpu 0 at 8937
+datapid 70 exec 2 ticks cpu 1 at 8938
+datapid 2 exec 0 ticks cpu 1 at 8940
+datapid 70 exec 0 ticks cpu 1 at 8940
+datapid 70 exec 3 ticks cpu 5 at 8941
+inserting node to sline
+inserting node to dline
+queue dline has size 70
+queue sline has size 70
+datapid 2 exec 1 ticks cpu 5 at 8981
+datapid 71 exec 3 ticks cpu 5 at 8983
+datapid 2 exec 0 ticks cpu 5 at 8986
+datapid 71 exec 0 ticks cpu 5 at 8986
+datapid 2 exec 0 ticks cpu 5 at 8986
+datapid 71 exec 0 ticks cpu 5 at 8986
+datapid 2 exec 0 ticks cpu 5 at 8986
+datapid 71 exec 2 ticks cpu 5 at 8986
+datapid 2 exec 5 ticks cpu 5 at 8996
+datapid 71 exec 2 ticks cpu 1 at 9009
+datapid 2 exec 0 ticks cpu 1 at 9011
+datapid 71 exec 1 ticks cpu 2 at 9011
+datapid 71 exec 0 ticks cpu 1 at 9024
+inserting node to sline
+inserting node to dline
+queue dline has size 71
+queue sline has size 71
+datapid 2 exec 2 ticks cpu 1 at 9024
+datapid 2 exec 9 ticks cpu 2 at 9055
+datapid 72 exec 2 ticks cpu 2 at 9064
+datapid 72 exec 1 ticks cpu 0 at 9110
+inserting node to sline
+inserting node to dline
+queue dline has size 72
+datapid 2 exec 1 ticks cpu 0 at 9114
+queue sline has size 72
+datapid 2 exec 1 ticks cpu 2 at 9152
+datapid 2 exec 3 ticks cpu 3 at 9199
+datapid 73 exec 0 ticks cpu 3 at 9202
+datapid 73 exec 1 ticks cpu 5 at 9202
+datapid 73 exec 1 ticks cpu 0 at 9203
+inserting node to sline
+inserting node to dline
+queue dline has size 73
+queue sline has size 73
+datapid 2 exec 2 ticks cpu 5 at 9234
+datapid 74 exec 3 ticks cpu 5 at 9245
+datapid 2 exec 0 ticks cpu 5 at 9248
+datapid 74 exec 4 ticks cpu 5 at 9248
+datapid 2 exec 0 ticks cpu 5 at 9252
+datapid 74 exec 0 ticks cpu 5 at 9252
+datapid 2 exec 0 ticks cpu 5 at 9252
+datapid 74 exec 2 ticks cpu 5 at 9252
+datapid 2 exec 3 ticks cpu 0 at 9251
+datapid 74 exec 4 ticks cpu 0 at 9251
+datapid 2 exec 0 ticks cpu 0 at 9255
+datapid 74 exec 1 ticks cpu 0 at 9255
+datapid 2 exec 1 ticks cpu 5 at 9258
+inserting node to sline
+inserting node to dline
+queue dline has size 74
+queue sline has size 74
+datapid 2 exec 1 ticks cpu 0 at 9273
+datapid 75 exec 2 ticks cpu 2 at 9309
+datapid 75 exec 1 ticks cpu 0 at 9370
+inserting node to sline
+inserting node to dline
+queue dline has size 75
+queue sline has size 75
+datapid 2 exec 1 ticks cpu 0 at 9386
+datapid 2 exec 5 ticks cpu 2 at 9412
+datapid 2 exec 5 ticks cpu 3 at 9413
+datapid 76 exec 5 ticks cpu 4 at 9413
+datapid 2 exec 6 ticks cpu 4 at 9421
+datapid 76 exec 0 ticks cpu 4 at 9427
+datapid 76 exec 0 ticks cpu 5 at 9427
+datapid 76 exec 0 ticks cpu 1 at 9442
+datapid 76 exec 1 ticks cpu 0 at 9454
+inserting node to sline
+inserting node to dline
+queue dline has size 76
+queue sline has size 76
+datapid 2 exec 1 ticks cpu 0 at 9456
+datapid 2 exec 1 ticks cpu 1 at 9462
+datapid 77 exec 2 ticks cpu 1 at 9465
+datapid 2 exec 2 ticks cpu 5 at 9466
+datapid 77 exec 3 ticks cpu 0 at 9496
+inserting node to sline
+inserting node to dline
+queue dline has size 77
+datapid 2 exec 1 ticks cpu 0 at 9500
+datapid 2 exec 2 ticks cpu 1 at 9505
+queue sline has size 77
+datapid 78 exec 1 ticks cpu 1 at 9511
+datapid 2 exec 0 ticks cpu 1 at 9512
+datapid 78 exec 0 ticks cpu 1 at 9512
+datapid 78 exec 0 ticks cpu 5 at 9512
+datapid 78 exec 1 ticks cpu 0 at 9515
+inserting node to sline
+inserting node to dline
+queue dline has size 78
+queue sline has size 78
+datapid 2 exec 6 ticks cpu 5 at 9552
+datapid 2 exec 1 ticks cpu 0 at 9567
+datapid 79 exec 1 ticks cpu 0 at 9569
+datapid 79 exec 1 ticks cpu 5 at 9572
+datapid 79 exec 2 ticks cpu 1 at 9581
+datapid 79 exec 1 ticks cpu 2 at 9594
+datapid 79 exec 3 ticks cpu 3 at 9594
+inserting node to sline
+inserting node to dline
+datapid 2 exec 3 ticks cpu 5 at 9601
+queue dline has size 79
+queue sline has size 79
+datapid 2 exec 1 ticks cpu 0 at 9633
+datapid 80 exec 1 ticks cpu 0 at 9635
+datapid 80 exec 1 ticks cpu 1 at 9636
+datapid 2 exec 1 ticks cpu 0 at 9644
+datapid 2 exec 3 ticks cpu 1 at 9676
+datapid 80 exec 3 ticks cpu 5 at 9676
+datapid 80 exec 1 ticks cpu 0 at 9679
+inserting node to sline
+datapid 2 exec 1 ticks cpu 0 at 9681
+inserting node to dline
+queue dline has size 80
+queue sline has size 80
+datapid 2 exec 2 ticks cpu 5 at 9686
+datapid 81 exec 1 ticks cpu 0 at 9687
+datapid 2 exec 1 ticks cpu 0 at 9717
+datapid 81 exec 1 ticks cpu 0 at 9719
+datapid 2 exec 0 ticks cpu 0 at 9720
+datapid 81 exec 0 ticks cpu 0 at 9720
+inserting node to sline
+inserting node to dline
+queue dline has size 81
+queue sline has size 81
+datapid 2 exec 1 ticks cpu 0 at 9720
+datapid 82 exec 0 ticks cpu 1 at 9729
+datapid 2 exec 0 ticks cpu 1 at 9729
+datapid 82 exec 0 ticks cpu 1 at 9729
+datapid 82 exec 3 ticks cpu 5 at 9729
+datapid 82 exec 1 ticks cpu 0 at 9733
+inserting node to sline
+inserting node to dline
+queue dline has size 82
+queue sline has size 82
+datapid 2 exec 2 ticks cpu 5 at 9773
+datapid 83 exec 3 ticks cpu 5 at 9775
+datapid 2 exec 0 ticks cpu 5 at 9778
+datapid 83 exec 1 ticks cpu 5 at 9778
+datapid 2 exec 0 ticks cpu 5 at 9779
+datapid 83 exec 0 ticks cpu 5 at 9779
+datapid 2 exec 0 ticks cpu 5 at 9779
+datapid 83 exec 2 ticks cpu 5 at 9779
+datapid 2 exec 1 ticks cpu 0 at 9780
+datapid 2 exec 1 ticks cpu 5 at 9789
+datapid 83 exec 1 ticks cpu 0 at 9789
+inserting node to sline
+inserting node to dline
+queue dline has size 83
+queue sline has size 83
+datapid 2 exec 1 ticks cpu 0 at 9791
+datapid 84 exec 1 ticks cpu 0 at 9793
+datapid 2 exec 0 ticks cpu 0 at 9795
+datapid 84 exec 1 ticks cpu 0 at 9795
+datapid 2 exec 3 ticks cpu 0 at 9805
+datapid 84 exec 1 ticks cpu 5 at 9824
+inserting node to sline
+inserting node to dline
+queue dline has size 84
+queue sline has size 84
+datapid 2 exec 2 ticks cpu 5 at 9825
+datapid 2 exec 2 ticks cpu 1 at 9833
+datapid 85 exec 1 ticks cpu 2 at 9834
+datapid 85 exec 0 ticks cpu 1 at 9852
+datapid 85 exec 2 ticks cpu 5 at 9851
+datapid 85 exec 1 ticks cpu 0 at 9872
+inserting node to sline
+inserting node to dline
+queue dline has size 85
+queue sline has size 85
+datapid 2 exec 1 ticks cpu 0 at 9922
+datapid 86 exec 1 ticks cpu 0 at 9924
+datapid 2 exec 0 ticks cpu 0 at 9926
+datapid 2 exec 0 ticks cpu 5 at 9927
+datapid 86 exec 1 ticks cpu 0 at 9926
+datapid 2 exec 1 ticks cpu 0 at 9940
+datapid 86 exec 2 ticks cpu 5 at 9943
+datapid 2 exec 3 ticks cpu 1 at 9958
+inserting node to sline
+inserting node to dline
+queue dline has size 86
+queue sline has size 86
+datapid 87 exec 3 ticks cpu 2 at 9976
+datapid 2 exec 0 ticks cpu 5 at 9986
+datapid 2 exec 1 ticks cpu 2 at 10038
+concreate ok
+fourfiles test
+inserting node to sline
+inserting node to dline
+queue dline has size 87
+queue sline has size 87
+inserting node to sline
+inserting node to dline
+datapid 88 exec 2 ticks cpu 3 at 10048
+datapid 88 exec 4 ticks cpu 5 at 10050
+queue dline has size 88
+queue sline has size 88
+datapid 89 exec 0 ticks cpu 2 at 10064
+datapid 88 exec 1 ticks cpu 0 at 10065
+datapid 88 exec 1 ticks cpu 1 at 10066
+datapid 2 exec 1 ticks cpu 0 at 10086
+inserting node to sline
+inserting node to dline
+queue dline has size 89
+queue sline has size 89
+datapid 89 exec 3 ticks cpu 1 at 10085
+datapid 2 exec 0 ticks cpu 1 at 10089
+datapid 89 exec 1 ticks cpu 1 at 10089
+datapid 89 exec 0 ticks cpu 5 at 10090
+datapid 88 exec 2 ticks cpu 0 at 10088
+datapid 2 exec 1 ticks cpu 1 at 10090
+datapid 90 exec 0 ticks cpu 1 at 10091
+datapid 89 exec 1 ticks cpu 1 at 10092
+datapid 90 exec 0 ticks cpu 1 at 10094
+datapid 2 exec 0 ticks cpu 1 at 10094
+datapid 90 exec 0 ticks cpu 5 at 10096
+datapid 89 exec 2 ticks cpu 0 at 10095
+datapid 2 exec 0 ticks cpu 0 at 10098
+datapid 88 exec 0 ticks cpu 0 at 10098
+datapid 89 exec 1 ticks cpu 0 at 10098
+datapid 90 exec 2 ticks cpu 0 at 10098
+datapid 2 exec 0 ticks cpu 0 at 10100
+datapid 89 exec 0 ticks cpu 0 at 10100
+datapid 90 exec 0 ticks cpu 0 at 10100
+datapid 2 exec 0 ticks cpu 0 at 10100
+datapid 88 exec 1 ticks cpu 0 at 10100
+datapid 89 exec 1 ticks cpu 5 at 10101
+datapid 90 exec 0 ticks cpu 5 at 10102
+datapid 2 exec 0 ticks cpu 5 at 10102
+datapid 88 exec 5 ticks cpu 5 at 10106
+datapid 88 exec 1 ticks cpu 1 at 10157
+datapid 88 exec 3 ticks cpu 2 at 10178
+datapid 88 exec 1 ticks cpu 4 at 10227
+datapid 90 exec 2 ticks cpu 1 at 10340
+datapid 88 exec 0 ticks cpu 1 at 10342
+datapid 90 exec 0 ticks cpu 1 at 10342
+datapid 89 exec 5 ticks cpu 5 at 10337
+datapid 88 exec 0 ticks cpu 5 at 10342
+datapid 89 exec 0 ticks cpu 5 at 10342
+datapid 90 exec 0 ticks cpu 5 at 10342
+datapid 88 exec 0 ticks cpu 5 at 10342
+datapid 2 exec 1 ticks cpu 0 at 10341
+datapid 90 exec 2 ticks cpu 0 at 10341
+datapid 89 exec 2 ticks cpu 5 at 10342
+datapid 88 exec 0 ticks cpu 5 at 10344
+datapid 89 exec 0 ticks cpu 5 at 10344
+datapid 88 exec 0 ticks cpu 5 at 10344
+datapid 2 exec 1 ticks cpu 0 at 10343
+datapid 88 exec 2 ticks cpu 0 at 10343
+datapid 90 exec 2 ticks cpu 0 at 10343
+datapid 2 exec 0 ticks cpu 0 at 10345
+datapid 89 exec 2 ticks cpu 5 at 10344
+datapid 2 exec 0 ticks cpu 5 at 10346
+datapid 89 exec 0 ticks cpu 5 at 10346
+inserting node to sline
+inserting node to dline
+queue dline has size 90
+queue sline has size 90
+datapid 88 exec 1 ticks cpu 0 at 10345
+datapid 89 exec 2 ticks cpu 0 at 10345
+datapid 90 exec 2 ticks cpu 0 at 10345
+datapid 89 exec 2 ticks cpu 2 at 10346
+datapid 2 exec 2 ticks cpu 5 at 10346
+datapid 90 exec 0 ticks cpu 5 at 10348
+datapid 88 exec 3 ticks cpu 1 at 10346
+datapid 91 exec 1 ticks cpu 5 at 10348
+datapid 90 exec 0 ticks cpu 5 at 10349
+datapid 91 exec 0 ticks cpu 5 at 10349
+datapid 90 exec 0 ticks cpu 5 at 10349
+datapid 91 exec 2 ticks cpu 3 at 10364
+datapid 89 exec 2 ticks cpu 1 at 10366
+datapid 88 exec 5 ticks cpu 2 at 10364
+datapid 89 exec 7 ticks cpu 5 at 10371
+datapid 88 exec 0 ticks cpu 0 at 10379
+datapid 91 exec 1 ticks cpu 5 at 10378
+datapid 90 exec 0 ticks cpu 0 at 10379
+datapid 91 exec 1 ticks cpu 0 at 10379
+datapid 91 exec 1 ticks cpu 1 at 10379
+datapid 89 exec 1 ticks cpu 0 at 10380
+datapid 91 exec 1 ticks cpu 0 at 10382
+datapid 88 exec 1 ticks cpu 0 at 10384
+datapid 91 exec 1 ticks cpu 0 at 10384
+datapid 88 exec 0 ticks cpu 0 at 10385
+datapid 90 exec 10 ticks cpu 5 at 10380
+datapid 90 exec 1 ticks cpu 0 at 10391
+datapid 89 exec 2 ticks cpu 5 at 10393
+datapid 90 exec 2 ticks cpu 5 at 10393
+datapid 89 exec 0 ticks cpu 5 at 10395
+datapid 90 exec 0 ticks cpu 5 at 10395
+datapid 91 exec 0 ticks cpu 5 at 10395
+datapid 88 exec 0 ticks cpu 5 at 10395
+datapid 90 exec 0 ticks cpu 5 at 10395
+datapid 91 exec 0 ticks cpu 5 at 10395
+datapid 90 exec 0 ticks cpu 5 at 10395
+datapid 91 exec 0 ticks cpu 5 at 10395
+datapid 90 exec 0 ticks cpu 5 at 10395
+datapid 91 exec 3 ticks cpu 5 at 10395
+datapid 90 exec 0 ticks cpu 5 at 10398
+datapid 91 exec 3 ticks cpu 5 at 10398
+datapid 90 exec 0 ticks cpu 5 at 10401
+datapid 91 exec 3 ticks cpu 5 at 10401
+datapid 90 exec 0 ticks cpu 5 at 10404
+datapid 91 exec 2 ticks cpu 5 at 10404
+datapid 90 exec 0 ticks cpu 5 at 10406
+datapid 91 exec 2 ticks cpu 5 at 10406
+datapid 90 exec 0 ticks cpu 5 at 10408
+datapid 91 exec 1 ticks cpu 5 at 10408
+datapid 90 exec 0 ticks cpu 5 at 10409
+datapid 91 exec 0 ticks cpu 5 at 10409
+datapid 90 exec 0 ticks cpu 5 at 10409
+datapid 91 exec 4 ticks cpu 5 at 10409
+datapid 90 exec 0 ticks cpu 1 at 10419
+datapid 90 exec 2 ticks cpu 5 at 10422
+datapid 91 exec 1 ticks cpu 5 at 10657
+datapid 88 exec 0 ticks cpu 0 at 10658
+datapid 91 exec 1 ticks cpu 0 at 10658
+datapid 89 exec 1 ticks cpu 1 at 10658
+datapid 90 exec 2 ticks cpu 5 at 10658
+datapid 91 exec 2 ticks cpu 5 at 10658
+datapid 90 exec 0 ticks cpu 5 at 10660
+datapid 88 exec 1 ticks cpu 1 at 10660
+datapid 89 exec 1 ticks cpu 1 at 10660
+datapid 88 exec 0 ticks cpu 1 at 10661
+datapid 89 exec 0 ticks cpu 1 at 10661
+datapid 91 exec 1 ticks cpu 5 at 10660
+datapid 90 exec 0 ticks cpu 5 at 10661
+datapid 88 exec 1 ticks cpu 1 at 10661
+datapid 89 exec 2 ticks cpu 1 at 10661
+datapid 88 exec 0 ticks cpu 1 at 10663
+datapid 89 exec 0 ticks cpu 1 at 10663
+datapid 91 exec 2 ticks cpu 5 at 10661
+datapid 90 exec 1 ticks cpu 0 at 10664
+datapid 91 exec 2 ticks cpu 0 at 10664
+datapid 90 exec 0 ticks cpu 0 at 10666
+datapid 91 exec 1 ticks cpu 0 at 10666
+datapid 88 exec 0 ticks cpu 0 at 10668
+datapid 89 exec 0 ticks cpu 0 at 10668
+datapid 91 exec 0 ticks cpu 0 at 10668
+datapid 90 exec 1 ticks cpu 0 at 10672
+datapid 90 exec 0 ticks cpu 5 at 10676
+datapid 91 exec 0 ticks cpu 5 at 10676
+datapid 88 exec 0 ticks cpu 0 at 10676
+datapid 91 exec 1 ticks cpu 0 at 10676
+datapid 90 exec 3 ticks cpu 5 at 10676
+datapid 91 exec 3 ticks cpu 5 at 10676
+datapid 90 exec 0 ticks cpu 5 at 10679
+datapid 88 exec 0 ticks cpu 0 at 10680
+datapid 90 exec 1 ticks cpu 1 at 10679
+datapid 88 exec 0 ticks cpu 1 at 10681
+datapid 91 exec 2 ticks cpu 5 at 10679
+datapid 89 exec 1 ticks cpu 0 at 10680
+datapid 91 exec 2 ticks cpu 0 at 10680
+datapid 89 exec 0 ticks cpu 0 at 10682
+datapid 91 exec 1 ticks cpu 0 at 10682
+datapid 90 exec 2 ticks cpu 5 at 10682
+datapid 91 exec 2 ticks cpu 5 at 10682
+datapid 90 exec 0 ticks cpu 5 at 10684
+datapid 88 exec 3 ticks cpu 0 at 10683
+datapid 89 exec 4 ticks cpu 0 at 10683
+datapid 88 exec 0 ticks cpu 0 at 10687
+datapid 89 exec 0 ticks cpu 0 at 10687
+datapid 91 exec 4 ticks cpu 5 at 10684
+datapid 90 exec 0 ticks cpu 5 at 10688
+datapid 91 exec 0 ticks cpu 5 at 10688
+datapid 90 exec 0 ticks cpu 5 at 10688
+datapid 91 exec 2 ticks cpu 5 at 10688
+datapid 89 exec 3 ticks cpu 1 at 10688
+datapid 90 exec 2 ticks cpu 5 at 10690
+datapid 88 exec 0 ticks cpu 5 at 10692
+datapid 89 exec 0 ticks cpu 5 at 10692
+datapid 91 exec 5 ticks cpu 0 at 10687
+datapid 91 exec 2 ticks cpu 5 at 10694
+datapid 91 exec 0 ticks cpu 1 at 10789
+datapid 88 exec 2 ticks cpu 0 at 11051
+datapid 89 exec 3 ticks cpu 0 at 11051
+datapid 90 exec 4 ticks cpu 0 at 11051
+datapid 90 exec 3 ticks cpu 1 at 11052
+datapid 89 exec 0 ticks cpu 0 at 11055
+datapid 91 exec 1 ticks cpu 0 at 11055
+datapid 88 exec 0 ticks cpu 0 at 11056
+datapid 91 exec 0 ticks cpu 0 at 11056
+datapid 88 exec 1 ticks cpu 5 at 11060
+datapid 90 exec 1 ticks cpu 5 at 11060
+datapid 88 exec 0 ticks cpu 5 at 11061
+datapid 90 exec 0 ticks cpu 5 at 11061
+datapid 89 exec 1 ticks cpu 0 at 11060
+datapid 88 exec 0 ticks cpu 0 at 11062
+datapid 91 exec 1 ticks cpu 5 at 11061
+datapid 89 exec 0 ticks cpu 0 at 11062
+datapid 90 exec 1 ticks cpu 0 at 11062
+datapid 91 exec 1 ticks cpu 0 at 11062
+datapid 90 exec 1 ticks cpu 0 at 11063
+datapid 89 exec 2 ticks cpu 5 at 11063
+datapid 88 exec 0 ticks cpu 0 at 11066
+datapid 90 exec 0 ticks cpu 0 at 11066
+datapid 88 exec 0 ticks cpu 0 at 11066
+datapid 91 exec 4 ticks cpu 5 at 11065
+datapid 90 exec 0 ticks cpu 5 at 11069
+datapid 91 exec 0 ticks cpu 5 at 11069
+datapid 89 exec 1 ticks cpu 0 at 11068
+datapid 2 exec 0 ticks cpu 0 at 11070
+datapid 88 exec 0 ticks cpu 0 at 11070
+datapid 89 exec 1 ticks cpu 0 at 11070
+datapid 91 exec 2 ticks cpu 0 at 11070
+datapid 89 exec 0 ticks cpu 0 at 11072
+datapid 91 exec 0 ticks cpu 0 at 11072
+datapid 88 exec 3 ticks cpu 1 at 11070
+datapid 91 exec 0 ticks cpu 1 at 11136
